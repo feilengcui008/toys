@@ -3,19 +3,18 @@
 """ 
 a spider for hualvtu.com using scrapy framework and BeautifulSoup
 优质图片网站画旅途的图片爬虫，按城市和相册集存储，可适当修改爬取任意城市
-coding by feilengcui008@gmail.com
-github:https://github.com/feilengcui
+(maybe outdated...)
 
 """
 import os
 import scrapy
 from scrapy.http import Request
 import BeautifulSoup as bs
-from hualvtu_spider.items import CityItem,AlbumItem,PictureItem
+from hualvtu_spider.items import CityItem, AlbumItem, PictureItem
 import re
 
 #storage place
-OUTPUT = os.path.join(os.path.dirname(os.path.realpath(__file__)),"OUT/")
+OUTPUT = os.path.join(os.path.dirname(os.path.realpath(__file__)), "OUT/")
 CITY_PAGE_DEPTH = 5
 MYCOUNTRY = u"意大利"
 
@@ -28,13 +27,12 @@ class MySpider(scrapy.Spider):
     name = "my"
     allowed_domains = ["hualvtu.com"]
     start_urls = (
-                "http://www.hualvtu.com/explore",
+            "http://www.hualvtu.com/explore",
             )
 
     def parse(self,response):
-        
-        #---------------------------------------------------------
-        #parse the start_urls
+
+        # parse the start_urls
         if re.match(r'http://www.hualvtu.com/explore',response.url) is None:
             pass
         else:
@@ -53,12 +51,10 @@ class MySpider(scrapy.Spider):
                         req = Request(new_city_item['city_link'],callback=self.parse)
                         req.city = new_city_item
                         yield req
-        #---------------------------------------------------------
 
-        #================================
-        #parse the city url
+        # parse the city url
         if dest_re.search(response.url) is not None:
-            #handle current_page_album
+            # handle current_page_album
             soup = bs.BeautifulSoup(response.body)
             current_page_albums = soup.findChildren('div',{'class':'quark-inner '})
             if current_page_albums is not None:
@@ -74,7 +70,7 @@ class MySpider(scrapy.Spider):
                         req.city = response.request.city
                         yield req
 
-            #handle more_page_album request back
+            # handle more_page_album request back
             div = soup.findChild('div',{'more':'true'})
             if div is not None:
                 album_id = div.get('last')
@@ -84,13 +80,11 @@ class MySpider(scrapy.Spider):
                     req.city = response.request.city
                     req.num = 1
                     yield req
-        #================================
 
-        #++++++++++++++++++++++++++++++++
         # parse more albums request
-        elif dest_more.search(response.url) is not None:
-            soup = bs.BeautifulSoup(response.body)
-            #handle current_page_album
+    elif dest_more.search(response.url) is not None:
+        soup = bs.BeautifulSoup(response.body)
+            # handle current_page_album
             current_page_albums = soup.findChildren('div',{'class':'quark-inner '})
             if current_page_albums is not None:
                 for i in current_page_albums:
@@ -104,7 +98,7 @@ class MySpider(scrapy.Spider):
                         req.album_item = new_album_item
                         req.city = response.request.city
                         yield req
-            #handle more_page_album request back
+            # handle more_page_album request back
             if response.request.num > CITY_PAGE_DEPTH:
                 pass
             else:
@@ -118,10 +112,9 @@ class MySpider(scrapy.Spider):
                     req.num = response.request.num+1
                     yield req
 
-        #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        #handle album request
-        elif picture_album_re.search(response.url) is not None:
-            soup = bs.BeautifulSoup(response.body)
+        # handle album request
+    elif picture_album_re.search(response.url) is not None:
+        soup = bs.BeautifulSoup(response.body)
             divs = soup.findChildren('div',{'backcolor':'#333'})
             print "----------"+response.request.city["city_name"]+"-----"+response.request.album_item["album_name"]+"--------"
             if divs:
@@ -133,12 +126,10 @@ class MySpider(scrapy.Spider):
                         req.city = response.request.city
                         req.album = response.request.album_item
                         yield req
-        #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-        #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        #handle picture storage
-        elif picture_re.search(response.url) is not None:
-            filedir = OUTPUT+response.request.city["city_name"]+"/"+response.request.album["album_name"].replace(' ','_')+"/"
+        # handle picture storage
+    elif picture_re.search(response.url) is not None:
+        filedir = OUTPUT+response.request.city["city_name"]+"/"+response.request.album["album_name"].replace(' ','_')+"/"
             if not os.path.exists(filedir):
                 try:
                     os.makedirs(filedir)
@@ -150,7 +141,5 @@ class MySpider(scrapy.Spider):
             else:
                 with open(filename,"w+") as fp:
                     fp.write(response.body)
-        #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-        else:
-            pass
+    else:
+        pass

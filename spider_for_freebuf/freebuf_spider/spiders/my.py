@@ -2,8 +2,7 @@
 # -*- coding: utf-8 -*-
 """ 
 a spider for freebuf.com using scrapy framework and BeautifulSoup
-coding by feilengcui008@gmail.com
-github:https://github.com/feilengcui
+(maybe outdated...)
 
 """
 
@@ -13,26 +12,26 @@ from freebuf_spider.items import SpiderItem
 import BeautifulSoup as bs
 import os
 
-#storage the items seperated by page number in ./OUTPUT dir
+# storage the items seperated by page number in ./OUTPUT dir
 OUTPUT = os.path.join(os.path.dirname(os.path.realpath(__file__)),"OUT/")
 
 class MySpider(scrapy.Spider):
     name = "my"
     allowed_domains = ["freebuf.com"]
     start_urls = (
-        "http://www.freebuf.com/page/1",
-    )
+            "http://www.freebuf.com/page/1",
+            )
 
     def parse(self, response):
         if "freebuf.com/page"  in response.url:
             soup = bs.BeautifulSoup(response.body)
-            #handle next_page
+            # handle next_page
             next_page_url = soup.find('div',{'id':'pagination'})
             next_page_url = next_page_url.findChild('a').get('href')
             print "-------------------------------"+next_page_url+"--------------------------------------"
             yield Request(next_page_url,callback=self.parse)
 
-            #handle current page
+            # handle current page
             current_page = response.url[28:]
             divs = soup.findAll('div',{'class':'news_inner'})
             for i in divs:
