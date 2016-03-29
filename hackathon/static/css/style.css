@@ -1,0 +1,142 @@
+.image
+{
+    height: 250px;
+    width:250px;
+
+}
+.imgIndex
+{
+    height: 200px;
+    width: 200px;
+}
+.image:hover
+{
+    -webkit-transform: scale(1.5);
+    -moz-transform:scale(1.5);
+    -o-transform:scale(1.5);
+}
+
+.file {
+    position: relative;
+    display: inline-block;
+    background: #D0EEFF;
+    border: 1px solid #99D3F5;
+    border-radius: 4px;
+    padding: 4px 12px;
+    overflow: hidden;
+    color: #1E88C7;
+    text-decoration: none;
+    text-indent: 0;
+    line-height: 20px;
+}
+.file input {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+}
+.file:hover {
+    background: #AADFFD;
+    border-color: #78C3F3;
+    color: #004974;
+    text-decoration: none;
+}
+.margin
+{
+    margin-top: 50px;
+}
+.imgShow
+{
+    width: 500px;
+    height:450px;
+    -webkit-animation: rotateplane 1.2s 1 ease-in-out;
+    animation: rotateplane 1.2s 1 ease-in-out;
+    
+}
+@-webkit-keyframes rotateplane {
+  0% { -webkit-transform: rotateX(0deg) }
+  50% { -webkit-transform: rotateX(180deg) }
+  100% { -webkit-transform: rotateX(360deg) }
+}
+ 
+@keyframes rotateplane {
+  0% {
+    transform:rotate(0deg) ;
+    -webkit-transform:rotateX(0deg);
+  } 
+  50% {
+    transform:rotateX(90deg) ;
+    -webkit-transform: rotateX(90deg);
+  } 
+  100% {
+    transform: rotateX(3600deg);
+    -webkit-transform:rotateX(360deg);
+  }
+}
+.showWord
+{
+    margin-top: 100px;
+}
+
+#welcomePage
+{
+    position: fixed;
+    width: 100%;
+    height: 2000px;
+    margin:0 0;
+    background-color: rgba(241,241,241,1);
+    z-index: 1000;
+
+}
+#page1
+{
+    -webkit-transform: rotate(-10deg);
+}
+#page2
+{
+    -webkit-transform: rotate(-10deg);
+}
+#page3
+{
+    -webkit-transform: rotate(10deg);
+}
+#page4
+{
+    -webkit-transform: rotate(10deg);
+}
+
+#word1,#word2,#word3
+{
+    -webkit-transform: rotate(-20deg);
+}
+#word4,#word5,#word6
+{
+    -webkit-transform: rotate(20deg);
+}
+#word1
+{
+    color:rgb(255,0,0);
+      text-shadow: -3px 0 4px #006;  
+}
+#word2
+{
+    color: rgb(255,253,224);
+    text-shadow: -3px 0 4px #006;  
+}
+#word3
+{
+    color: rgb(153,105,202);
+      text-shadow: -3px 0 4px #006;  
+}
+#word4
+{
+    color: rgb(224,180,189);
+      text-shadow: -3px 0 4px #006;  
+}
+#word5
+{
+    color: rgb(219,225,184);
+      text-shadow: -3px 0 4px #006;  
+}
+

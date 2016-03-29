@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>暴走漫画</title>
+    <link href="{{static_url('css/bootstrap.css')}}" type="text" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="{{static_url('css/uploadify.css')}}">
+            <link rel="stylesheet" type="text/css" href="{{static_url('css/style.css')}}">
+        <script type="text/javascript" src="{{static_url('js/jquery-2.1.4.js')}}"></script>
+        <script type="text/javascript" src="{{static_url('js/jquery.uploadify.js')}}"></script>
+        <script type="text/javascript" src="{{static_url('js/bootstrap.js')}}"></script>
+        <script type="text/javascript" src="{{static_url('js/index.js')}}"></script>
+</head>
+<body>
+	<div class="welcomePage" id="welcomePage">
+		<div class="container">
+			<div class="row" style="margin-top: 30px;">
+				<div class="col-md-3 col-md-offset-1">
+					<div >
+						<img src="{{static_url('image/page1.jpg')}}" alt="" id="page1"></div>
+				</div>
+
+				<div class="col-md-3 col-md-offset-4">
+					<div>
+						<img src="{{static_url('image/page2.jpg')}}" alt="" id="page2"></div>
+				</div>
+
+			</div>
+
+			<div class="row" >
+				<div class="col-md-12">
+					<h1 class="text-center">HolyFace</h1>
+
+					<br>
+					<h3 class="text-center">我的漫画我做主</h3>
+					<br></div>
+				<div class="col-md-2 col-md-offset-5">
+					<button type="button" class="btn btn-success btn-block btn-lg" id="hide">开始制作</button>
+				</div>
+
+			</div>
+			<div class="row" style="margin-top: 30px;">
+				<div class="col-md-3 col-md-offset-1">
+					<div >
+						<img src="{{static_url('image/page3.jpg')}}" alt="" id="page3"></div>
+				</div>
+
+				<div class="col-md-3 col-md-offset-4">
+					<div>
+						<img src="{{static_url('image/page4.jpg')}}" alt=""  id="page4"></div>
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1">
+				<h3 class="text-center">选择你喜欢的暴走漫画，我们一起来恶搞他/她</h3>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-3 col-md-offset-1">
+				<div class="image" id="image1" data-name="好棒耶">
+                    <img class="imgIndex" src="{{static_url('image/image1.jpg')}}" alt="no" ></div>
+			</div>
+			<div class="col-md-3 col-md-offset-1">
+				<div class="image" id="image2" data-name="装逼"> 
+                    <img class="imgIndex" src="{{static_url('image/image2.jpg')}}" alt="no"></div>
+			</div>
+			<div class="col-md-3 col-md-offset-1">
+				<div class="image" id="image3" data-name="姚明">
+                    <img class="imgIndex" src="{{static_url('image/image3.jpg')}}" alt="no" ></div>
+			</div>
+
+		</div>
+		<br/>
+		<div class="row">
+			<div class="col-md-3 col-md-offset-1">
+				<div class="image" id="image4" data-name="你太丑">
+                    <img class="imgIndex" src="{{static_url('image/image4.jpg')}}" alt="no" ></div>
+			</div>
+			<div class="col-md-3 col-md-offset-1">
+				<div class="image" id="image5" data-name="我看好你">
+                    <img class="imgIndex" src="{{static_url('image/image5.jpg')}}" alt="no"></div>
+			</div>
+			<div class="col-md-3 col-md-offset-1">
+				<div class="image" id="image6" data-name="妥妥的">
+                    <img class="imgIndex" src="{{static_url('image/image6.jpg')}}" alt="no" ></div>
+			</div>
+
+		</div>
+		<br/>
+		<div class="row">
+			<div class="col-md-3 col-md-offset-1">
+				<div class="image" id="image7" data-name="吃颗药">
+                    <img class="imgIndex" src="{{static_url('image/image7.jpg')}}" alt="no" ></div>
+			</div>
+			<div class="col-md-3 col-md-offset-1">
+				<div class="image" id="image8" data-name="你美">
+                    <img class="imgIndex" src="{{static_url('image/image8.jpg')}}" alt="no" ></div>
+			</div>
+			<div class="col-md-3 col-md-offset-1">
+				<div class="image" id="image9" data-name="你够了">
+                    <img class="imgIndex" src="{{static_url('image/image9.jpg')}}" alt="no" ></div>
+			</div>
+
+		</div>
+	</div>
+	<!-- Button trigger modal -->
+
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel"></h4>
+					<p>输入好友照片地址或直接上传好友照片, 即可恶搞他/她</p>
+				</div>
+				<div class="modal-body">
+					<form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+						<div class="form-group">
+							<label for="url" class="col-sm-2 control-label">背景图片</label>
+							<div class="col-sm-10">
+								<input type="text" name="img" class="form-control" id="backgroundImg" value="" readonly="true">
+								</div>
+						</div>
+							<div class="form-group">
+							<label for="threshold" class="col-sm-2 control-label">对比度</label>
+								<div class="col-sm-10">
+								<input type="number" name="threshold" value="" placeholder="推荐90">
+								</div>
+							
+						</div>
+                        <!--
+						<div class="form-group">
+							<label for="url" class="col-sm-2 control-label">url</label>
+							<div class="col-sm-10">
+								<input type="url" class="form-control" id="url" value="" placeholder="请输入图片地址" ></div>
+						</div>
+                        -->
+						<div class="form-group">
+							<label for="url" class="col-sm-2 control-label">选择图片</label>
+							<div class="col-sm-10">
+								<a href="#" class="file">
+									选择图片
+									<input type="file" name="file" id="file" value=""></a>
+							</div>
+						</div>
+					
+						<div class="form-group">
+							<label for="url" class="col-sm-2 control-label" id="priviewLabel"></label>
+							<div class="col-sm-10">
+								<div id="priview"></div>
+							</div>
+
+						</div>
+						<div class="form-group">
+							<div class="col-sm-5"></div>
+							<div class="col-sm-2">
+								<button type="submit" class="btn btn-primary">提交</button>
+							</div>
+
+						</div>
+
+					</form>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+</body>
+</html>
