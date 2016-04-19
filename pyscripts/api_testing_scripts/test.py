@@ -1,4 +1,5 @@
-#encoding: utf-8
+#!/usr/bin/python 
+# encoding: utf-8
 
 import requests 
 import sys
@@ -15,7 +16,8 @@ class TestScript(object):
     res = None 
     token = None 
     cookies = None 
-    def __init__(self, url, headers = None, data = None, cookies = None, method = 'get'):
+    def __init__(self, url, headers = None, data = None, cookies = None, \
+            method = 'get'):
         self.url = url
         self.headers = headers 
         self.data = data 
@@ -39,20 +41,24 @@ class TestScript(object):
     def sendRequest(self):
         self.data["token"] = self.token
         if self.method == 'get':
-            self.res = requests.get(url, params = self.data, headers = self.headers, cookies = self.cookies) 
+            self.res = requests.get(url, params = self.data, headers \
+                    = self.headers, cookies = self.cookies) 
             #print self.res.content 
             outfile = sys.stdout
             with outfile:
-        		json.dump(json.loads(self.res.content), outfile, sort_keys=True,
+        		json.dump(json.loads(self.res.content), outfile, \
+                                sort_keys=True,
                   	indent=4, separators=(',', ': '))
         		outfile.write('\n')
             return 
         if self.method == 'post':
-            self.res = requests.post(url, data= self.data, headers = self.headers, cookies = self.cookies)   
+            self.res = requests.post(url, data= self.data, headers = \
+                    self.headers, cookies = self.cookies)   
             #print self.res.contentoutfile = sys.stdout
             outfile = sys.stdout
             with outfile:
-        		json.dump(json.loads(self.res.content), outfile, sort_keys=True,
+        		json.dump(json.loads(self.res.content), outfile, \
+                                sort_keys=True,
                   	indent=4, separators=(',', ': '))
         		outfile.write('\n')
             return 
