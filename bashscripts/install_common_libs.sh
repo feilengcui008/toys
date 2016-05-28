@@ -35,8 +35,7 @@ if [ ! -d "Libevent" ]; then
   #./autogen.sh 
   #./configure && make -j 2
   mkdir build && cd build 
-  cmake ..
-  make -j $JOBS 
+  cmake .. -DEVENT__BUILD_SHARED_LIBRARIES=ON && make -j $JOBS 
   sudo make install 
 else
   echo -e "${RED_COLOR}Libevent has been installed${END_COLOR}"
@@ -50,7 +49,7 @@ if [ ! -d "glog" ]; then
   cd glog
   mkdir build && cd build
   #export CXXFLAGS="-fPIC" && cmake .. && make -j 2
-  cmake .. && make -j $JOBS
+  cmake .. -DBUILD_SHARED_LIBS=ON && make -j $JOBS
   sudo make install 
 else 
   echo -e "${RED_COLOR}glog has been installed${END_COLOR}"
@@ -63,7 +62,7 @@ if [ ! -d "gflags" ]; then
   git clone https://github.com/gflags/gflags
   cd gflags
   mkdir build && cd build 
-  cmake .. && make -j $JOBS 
+  cmake .. -DBUILD_SHARED_LIBS=ON && make -j $JOBS 
   sudo make install 
 else
   echo -e "${RED_COLOR}gflags has been installed${END_COLOR}"
@@ -76,7 +75,7 @@ if [ ! -d "googletest" ]; then
   git clone https://github.com/google/googletest 
   cd googletest 
   mkdir build && cd build 
-  cmake .. && make -j $JOBS
+  cmake .. -DBUILD_SHARED_LIBS=ON && make -j $JOBS
   sudo make install 
 else 
   echo -e "${RED_COLOR}googletest has been installed${END_COLOR}"
@@ -114,12 +113,14 @@ fi
 cd $LIB_PATH 
 if [ ! -d "folly" ]; then 
   echo -e "${RED_COLOR}installing folly...${END_COLOR}"
-git clone https://github.com/facebook/folly
-cd folly/folly 
-autoreconf -ivf 
-./configure
-make
-sudo make install
+  # cannot use local build gflags, glog and libevent... 
+  sudo apt-get -y install libgflags-dev libgoogle-glog-dev
+  git clone https://github.com/facebook/folly
+  cd folly/folly 
+  autoreconf -ivf 
+  ./configure
+  make
+  sudo make install
 else 
   echo -e "${RED_COLOR}folly has been installed${END_COLOR}"
 fi
