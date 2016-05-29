@@ -1,6 +1,10 @@
 #### a cheat sheet for some common utility commands on Linux platform
 to add more
 
+
+----
+
+
 ```
 + ps
   + unix options with slash
@@ -34,15 +38,33 @@ to add more
     + ps aux -L          all thread 
     + ps -f --ppid 2     all kernel threads 
 
+```
+
+----
+
+
+```
 + head 
   + -n[k]                first k lines
   + -n[-k]               all except last k lines 
 
+```
+
+----
+
+
+```
 + tail 
   + -f[filename]         follow while file content growing
   + -n[k]                last k lines 
   + -n[+k]               from kth line to end 
 
+```
+
+----
+
+
+```
 + wc
   + -m                   char count
   + -l                   line count 
@@ -50,11 +72,24 @@ to add more
   + -L                   longest line length
   + -c                   byte count 
 
+```
+
+
+----
+
+
+```
 + cut 
   + -d[delimiter]        use to split each line to fields
   + -f[number]           select only the number fileds
   + -d' ' -f1,3          use space to split each line and print 1,3 fields 
 
+```
+
+----
+
+
+```
 + sort
   + -u                   sort file and keep unique contents
   + -r                   reverse sort 
