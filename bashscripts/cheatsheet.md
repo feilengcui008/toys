@@ -152,6 +152,14 @@ echo $!  # last executed cmd pid
 echo $?  # exec status 
 echo $$  # current bash script process pid 
 
+# some configurations for output color
+RED_COLOR='\E[1;31m'
+GREEN_COLOR='\E[1;32m'
+YELLOW_COLOR='\E[1;33m'
+BLUE_COLOR='\E[1;34m'
+END_COLOR='\E[0m'
+echo -e "${RED_COLOR}installing basic utilities...${END_COLOR}"
+
 
 if [ -e "/bin/bash" ]; then
   echo "yes"
