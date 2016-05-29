@@ -1,5 +1,38 @@
-#### a cheat sheet for some common utility commands on Linux platform
-to add more
+## a cheat sheet for some common utility commands and bash script programming on Linux platform
+
+
+### common utilities commands
+
++ system infomation and configuration
+  + summary
+    + ps/top/mpstat
+  + process 
+    + ps/pidstat
+  + memory 
+    + free/vmstat/sar
+  + cpu 
+    + sar 
+  + netowrk
+    + netstat/sar/ssh/nc/ip/route/ifconfig/rsync/scp/iptables
+  + filesystem 
+    + du/lsblk/df/fdisk/mount/find 
+  + disk io
+    + sar/iostat 
+  + others
+    + ulimit/sysctl/getconf
+
++ string processing tools
+  + grep/egrep/wc/sort/head/tail/cut/awk/sed/tr/nl/iconv/find/xargs
+
++ binary processing tools
+  + objdump/objcopy/readelf/nm/hexdump
+
++ compile/debug/trace/perf tools 
+  + gcc/g++/gdb/clang/clang++/lldb/strace/valgrind/ldconfig/
+    autoscan/aclocal/autoconf/automake/make/cmake/
+    ftrace/systemtap/perf/oprofile/kdump/crash
+
++ more
 
 
 ----
@@ -94,5 +127,101 @@ to add more
   + -u                   sort file and keep unique contents
   + -r                   reverse sort 
   + -R                   random sort 
+
+```
+
+
+
+
+
+----
+----
+
+
+
+### bash script programming 
+
+```
+echo $#  # arguments number
+echo $0  # exec filename
+echo $1  # first argument
+echo $2  # second argument 
+echo "$*"  # all arguments as a whole string   
+echo "$@"  # all arguments as an array
+echo $!  # last executed cmd pid
+echo $?  # exec status 
+echo $$  # current bash script process pid 
+
+
+if [ -e "/bin/bash" ]; then
+  echo "yes"
+else
+  echo "no"
+fi
+
+
+read temp 
+case $temp in
+  1)
+    echo "1"
+    ;;
+  2)
+    echo "2"
+    ;;
+  [3-9])
+    echo "3-9"
+esac
+
+
+for i in "$*"; do
+  echo $i
+done
+
+for i in `ls`; do 
+  echo $i
+done
+
+for (( i = 0; i < $#; i++ )); do
+  echo $i
+done 
+
+x=1
+while [[ $x -le $# ]]; do
+  echo $x
+  let x=x+1
+done
+
+
+function testFunc1 {
+  echo "in testFunc1"
+}
+testFunc2() {
+  echo "in testFunc2", $*
+}
+testFunc1
+testFunc2 123 456
+
+
+-e filename   =>  file exists 
+-d dirname    =>  dir exists 
+-f filename   =>  regular file
+-L filename   =>  symbol link 
+-r filename   =>  can be read 
+-w filename   =>  can be written
+-x filename   =>  can be executed 
+filename1 -nt filename2   =>  newer than 
+filename1 -ot filename2   =>  older than 
+
+-z string        =>  null string 
+-n string        =>  not null string 
+string1=string2  =>  equal
+string1!=string2 =>  not equal 
+
+num1 -eq num2    =>  = 
+num1 -ne num2    =>  != 
+num1 -lt num2    =>  < 
+num1 -le num2    =>  <=
+num1 -gt num2    =>  >
+num1 -ge num2    =>  >=
 
 ```
