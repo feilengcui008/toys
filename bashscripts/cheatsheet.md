@@ -1,7 +1,7 @@
 #### a cheat sheet for some common utility commands on Linux platform
 to add more
 
-
+```
 + ps
   + unix options with slash
     + -e                 every process
@@ -59,3 +59,5 @@ to add more
   + -u                   sort file and keep unique contents
   + -r                   reverse sort 
   + -R                   random sort 
+
+```
