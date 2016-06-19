@@ -5,6 +5,14 @@ import requests
 import sys
 import json
 
+################################
+#                              # 
+# a script to test restful api #
+#                              #
+# feilengcui008@gmail.com      #
+#                              #
+################################
+
 USERNAME = "your username"
 PASSWORD = "your password"
 
