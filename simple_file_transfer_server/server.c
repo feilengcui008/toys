@@ -25,6 +25,8 @@
 #define SERVER_RECEIVE_BUF 4096
 #define SET_SIZE 1024
 
+const char *dir = ".";
+
 
 // some forward declarations
 void clientRead(struct aeEventLoop *ae, int fd);
@@ -84,7 +86,10 @@ void clientRead(struct aeEventLoop *ae, int fd)
     removeEventAndClose(ae, fd);
     return;
   } else {
-    const char *filename = "received.txt";
+    char filename[1024];
+    sprintf(filename, "%s", dir);
+    const char *file = "/received.txt";
+    strcat(filename, file);
     FILE *fp = fopen(filename, "w+");
     if (!fp) {
       logInfo("open file error");
@@ -144,11 +149,15 @@ void removeEventAndClose(struct aeEventLoop *ae, int fd)
   close(fd);
 }
 
-
 int main(int argc, char *argv[])
 {
+  if (argc < 2) {
+    fprintf(stdout, "usage: ./server port dir\n");
+    return 0;
+  }
+  if (argc == 3) { dir = argv[2]; }
   char err[ERR_BUF_LEN];
-  int port = 8080;
+  int port = atoi(argv[1]);
   int backlog = 100;
   aeEventLoop *ae;
   int serverfd;

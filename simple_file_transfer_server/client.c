@@ -25,15 +25,16 @@
 
 int main(int argc, char *argv[])
 {
-  if (argc < 2) {
-    fprintf(stdout, "usage: client filepath\n");
+  if (argc < 3) {
+    fprintf(stdout, "usage: client port filepath\n");
     return 0;
   }
-  char *pathname = argv[1];
+  int port = atoi(argv[1]);
+  char *pathname = argv[2];
   char err[ERR_BUF_LEN]; 
   
   // connect 
-  int clientfd = anetTcpConnect(err, NULL, 8080);
+  int clientfd = anetTcpConnect(err, NULL, port);
   if (clientfd == -1) {
     errorMsgExit(err);
   } 
