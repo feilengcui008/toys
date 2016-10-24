@@ -16,20 +16,25 @@ class Printer(object):
 
     @staticmethod
     def red(msg):
-        print "%s%s%s" %(Printer.RED_COLOR, str(msg), Printer.END_COLOR)
+        """ output by red """
+        print "%s%s%s" % (Printer.RED_COLOR, str(msg), Printer.END_COLOR)
 
     @staticmethod
     def green(msg):
-        print "%s%s%s" %(Printer.GREEN_COLOR, str(msg), Printer.END_COLOR)
+        """ output by green """
+        print "%s%s%s" % (Printer.GREEN_COLOR, str(msg), Printer.END_COLOR)
 
     @staticmethod
     def yellow(msg):
-        print "%s%s%s" %(Printer.YELLOW_COLOR, str(msg), Printer.END_COLOR)
+        """ output by yellow """
+        print "%s%s%s" % (Printer.YELLOW_COLOR, str(msg), Printer.END_COLOR)
 
     @staticmethod
     def blue(msg):
-        print "%s%s%s" %(Printer.BLUE_COLOR, str(msg), Printer.END_COLOR)
+        """ output by blue """
+        print "%s%s%s" % (Printer.BLUE_COLOR, str(msg), Printer.END_COLOR)
 
     @staticmethod
     def bold(msg):
-        print "%s%s%s" %(Printer.BLUE_COLOR, str(msg), Printer.END_COLOR)
+        """ output by bold font """
+        print "%s%s%s" % (Printer.BLUE_COLOR, str(msg), Printer.END_COLOR)
