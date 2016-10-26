@@ -150,6 +150,9 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 
+"column color
+set colorcolumn=80,100,120
+
 "ctags settings
 set tags=tags
 set tags+=./tags;/
