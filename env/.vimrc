@@ -40,6 +40,7 @@ Plugin 'vim-scripts/winmanager'
 Plugin 'vim-scripts/AutoComplPop'
 Plugin 'honza/vim-snippets'
 Plugin 'SirVer/ultisnips'
+Plugin 'terryma/vim-multiple-cursors'
 
 call vundle#end()
 filetype plugin indent on
