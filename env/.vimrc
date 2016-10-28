@@ -154,6 +154,10 @@ set expandtab
 "column color
 set colorcolumn=80,100,120
 
+"for system copy
+vmap y :w! ~/.vbuf<cr>
+vmap p :r ~/.vbuf<cr>
+
 "ctags settings
 set tags=tags
 set tags+=./tags;/
