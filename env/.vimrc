@@ -142,6 +142,10 @@ endif
 "line number
 set nu
 
+" special chars
+set list
+nmap <S-s> :%s/\s\+$//<cr>
+
 "theme
 color evening
 color desert
