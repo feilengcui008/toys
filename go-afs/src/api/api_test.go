@@ -6,16 +6,16 @@ import (
 )
 
 var config = HdfsBuilderConfig{
-	Endpoint: "honour.afstest.afs.baidu.com",
-	Port:     61000,
+	Endpoint: "honour.xxx.xxx.xxx.com",
+	Port:     11111,
 	Ugi:      "username,password",
 }
 var fs, _ = NewFileSystem(config)
 
 func createFileSystem() (*FileSystem, error) {
 	config := HdfsBuilderConfig{
-		Endpoint: "honour.afstest.afs.baidu.com",
-		Port:     61000,
+		Endpoint: "honour.xxx.xxx.xxx.com",
+		Port:     11111,
 		Ugi:      "username,password",
 	}
 	return NewFileSystem(config)

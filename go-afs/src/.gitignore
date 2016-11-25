@@ -1,9 +1,0 @@
-vendor/afs_agent/monitor/bvar.*
-api/logs
-*.data
-vendor/afs_agent/log/afs_agent.log
-vendor/afs_agent/log/run.log
-vendor/afs_agent/monitor/bvar.afs_agent.data
-vendor/afs_agent/monitor/bvar.afs_agent.latency.data
-vendor/afs_agent/monitor/bvar.afs_agent.system.data
-
