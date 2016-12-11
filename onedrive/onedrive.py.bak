@@ -39,6 +39,7 @@ class OneDrive(object):
     ########## auth related ##########
     # include all steps for auth 
     def auth(self):
+        return
         if self.readAuthFile():
             return 
         else:
@@ -140,7 +141,7 @@ class OneDrive(object):
             by_id = "/drive/items/%s" % str(item_id)
             url = "%s%s?access_token=%s" % (self.api_root, by_id, self.access_data["access_token"])
         elif item_path:
-            by_path = "/drive/root:/%s" % str(item_path)
+            by_path = "/drive/root:%s" % str(item_path)
             url = "%s%s?access_token=%s" % (self.api_root, by_path, self.access_data["access_token"])
         else:
             print "no item_id or item_path"
@@ -148,14 +149,16 @@ class OneDrive(object):
         return url
     
     def _getIdByPath(self, parent_path = ""):
+        print "parent_path:", parent_path
         if parent_path:
             parent_info = self.getItemInfo(item_path = parent_path)
+            print parent_info
             if not parent_info.has_key("id"):
                 print "in getIdByPath get id for %s failed" % parent_path
                 return None
             return parent_info["id"]
         else:
-            parent_info = self.getItemInfo(item_path = "/drive/root")
+            parent_info = self.getItemInfo()
             if not parent_info.has_key("id"):
                 print "in getIdByPath get id for root failed"
                 return None
@@ -177,6 +180,7 @@ class OneDrive(object):
         if not item_id and not item_path:
             return {} 
         url = self._construct_item_path(item_id, item_path)
+        print url
         if url:
             res = requests.get(url)
             data = json.loads(res.content)
@@ -212,12 +216,9 @@ class OneDrive(object):
 
 
     def createDirItem(self, name, parent_id = "", parent_path = "", is_dir = True):
-        if not parent_id:
-            parent_id = self._getIdByPath(parent_path)
-            if not parent_id:
-                return 
-        by_id = "/drive/items/%s/children" % parent_id
-        url = "%s%s?access_token=%s" % (self.api_root, by_id, self.access_data["access_token"])
+        by_path = "/drive/root:/testDir"
+        url = "%s%s?access_token=%s" % (self.api_root, by_path, self.access_data["access_token"])
+        print url
         if is_dir:
             data = {}
             data["name"] = name 
