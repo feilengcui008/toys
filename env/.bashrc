@@ -84,10 +84,6 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
-# some more ls aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -123,28 +119,122 @@ alias q='exit'
 export CLICOLOR=1
 
 # some alias 
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
 alias tmux-attach='tmux attach-session -t'
 alias tmux-ls='tmux ls'
+alias tmux-kill='tmux kill-session -t'
+alias server='python -m SimpleHTTPServer'
+alias jsonview='python -m json.tool'
+alias watch='watch -n'
+alias kernel_threads='ps -f --ppid 2'
+
+alias color_print=_color_print
+alias cut_line=_cut_line
+alias add_ld_library_path=_add_ld_library_path
+alias add_python_path=_add_python_path
+alias build_go_static=_build_go_static
+alias ld_flag='pkg-config --cflags --libs'
+alias mvn_gen=_mvn_gen
+alias mvn_exec=_mvn_exec
+alias infile_replace=_infile_replace
+
+git config --global alias.st status
+git config --global alias.co checkout
+git config --global alias.br branch
+git config --global alias.ci commit
+git config --global alias.last 'log -l'
+git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+
+_color_print() {
+  content=$1
+  color=$2
+  begin=""
+  end='\E[0m'
+  case $color in
+    "red")
+      begin='\E[1;31m'
+      ;;
+    "green")
+      begin='\E[1;32m'
+      ;;
+    "yellow")
+      begin='\E[1;33m'
+      ;;
+    "blue")
+      begin='\E[1;34m'
+      ;;
+    "*")
+      echo 'unsupported color'
+      exit 1
+  esac
+  echo -e "$begin $content $end"
+}
+
+_cut_line() {
+  filepath=$1
+  begin=$2
+  end=$3
+  if [ $end -lt 0 ];then
+    cat $filepath | tail -n+$begin | head -n-$((0-$end-1))
+  else
+    cat $filepath | head -n $end | tail -n $(($end-$begin + 1))
+  fi
+}
+
+_add_ld_library_path() {
+  export LD_LIBRARY_PATH=$1:$LD_LIBRARY_PATH
+}
+
+_add_python_path() {
+  export PYTHONPATH=$1:$PYTHONPATH
+}
+
+_build_go_static() {
+  #shift;
+  go build -ldflags "-linkmode external -extldflags '-static $@'"
+}
+
+_mvn_gen() {
+  groupid=$1
+  artifactid=$2
+  mvn archetype:generate -DgroupId=$groupid -DartifactId=$artifactid -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+}
+
+_mvn_exec() {
+  mainclass=$1
+  shift;
+  args=$@
+  mvn exec:java -Dexec.mainClass=$mainclass -Dexec.args="$args"
+}
+
+_infile_replace() {
+  filepath=$1
+  origin=$2
+  target=$3
+  sed -i "s/$origin/$target/g" $filepath
+}
 
 # avoid rm -rf
-mkdir -p ~/.trash
-alias rm=trash
-alias r=trash
-alias rl='ls ~/.trash'
-alias ur=undelfile
+#mkdir -p ~/.trash
+#alias rm=trash
+#alias r=trash
+#alias rl='ls ~/.trash'
+#alias ur=undelfile
 
-undelfile() {
-  mv -i ~/.trash/$@ ./
-}
+#undelfile() {
+#  mv -i ~/.trash/$@ ./
+#}
 
-trash() {
-  mv $@ ~/.trash/
-}
+#trash() {
+#  mv $@ ~/.trash/
+#}
 
-cleartrash() {
-  read -p "clear sure?[n]" confirm
-  [ $confirm == 'y' ] || [ $confirm == 'Y' ] && /bin/rm -rf ~/.trash/*
-}
+#cleartrash() {
+#  read -p "clear sure?[n]" confirm
+#  [ $confirm == 'y' ] || [ $confirm == 'Y' ] && /bin/rm -rf ~/.trash/*
+#}
 
 ########  programming languages toolchains related  ########
 
@@ -156,7 +246,7 @@ MYCODE_PATH=$ME/mycode
 WORKSPACE_PATH=$ME/workspace
 
 # python cmdline  autocomplete
-PYTHONSTARTUP='/home/tan/.pythonstartup'
+PYTHONSTARTUP='~/.pythonstartup'
 export PYTHONSTARTUP
 
 # java path
@@ -179,8 +269,8 @@ export GOBIN=$GOPATH/bin
 export PATH=$GOROOT/bin:$GOBIN:$PATH
 
 # scheme path 
-#export PATH=$PATH:$SOFTWARE_PATH/scheme/bin
-#export MITSCHEME_LIBRARY_PATH=$SOFTWARE_PATH/scheme/lib/mit-scheme-x86-64
+export PATH=$PATH:$SOFTWARE_PATH/scheme/bin
+export MITSCHEME_LIBRARY_PATH=$SOFTWARE_PATH/scheme/lib/mit-scheme-x86-64
 
 # cmake 3.5
 export PATH=$PATH:$SOFTWARE_PATH/cmake-3.5.2-Linux-x86_64/bin
