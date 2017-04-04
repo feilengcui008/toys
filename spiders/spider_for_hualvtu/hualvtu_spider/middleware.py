@@ -1,5 +1,7 @@
 #!/usr/bin/env python
+
 import base64
+
 class ProxyMiddleware(object):
     def process_request(self,request,spider):
         # your proxy ip 

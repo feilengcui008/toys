@@ -7,10 +7,8 @@
 
 import scrapy
 
-
 class HualvtuSpiderItem(scrapy.Item):
     # define the fields for your item here like:
-    # name = scrapy.Field()
     link = scrapy.Field()
 
 class CityItem(scrapy.Item):

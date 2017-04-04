@@ -1,9 +1,0 @@
-{
-	"url" : "http://x.x.x.x/post"
-	"method" :"post",
-	"data" : {
-		"itemid" : 12,
-		"level" : 5,
-		"content" : "comment content"
-	}
-}
