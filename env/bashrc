@@ -1,6 +1,6 @@
-# ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
+#################################################################
+#                 default system settings                       #
+#################################################################
 
 # If not running interactively, don't do anything
 case $- in
@@ -109,47 +109,34 @@ if ! shopt -oq posix; then
   fi
 fi
 
-#########################  my configurations  ##########################
 
-########  some common configurations  ########
+
+#############################################################
+#                     personal settings                     #
+#############################################################
 
 export PS1='\[\033[01;32m\]\u@\h\[\033[01;34m\] \w\[\033[01;33m\]$(__git_ps1)\[\033[01;32m\] \$ :-)\[\033[01;00m\] '
 export GIT_PS1_SHOWDIRTYSTATE=1
-alias q='exit'
-export CLICOLOR=1
 
-# some alias 
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
+alias rr='cd ~/me/workspace'
+alias qq='exit'
+alias clr='clear'
+alias server='python -m SimpleHTTPServer '
 alias tmux-attach='tmux attach-session -t'
 alias tmux-ls='tmux ls'
 alias tmux-kill='tmux kill-session -t'
-alias server='python -m SimpleHTTPServer'
 alias jsonview='python -m json.tool'
 alias watch='watch -n'
-alias kernel_threads='ps -f --ppid 2'
-
+alias kthreads='ps -f --ppid 2'
 alias color_print=_color_print
 alias cut_line=_cut_line
-alias add_ld_library_path=_add_ld_library_path
-alias add_python_path=_add_python_path
-alias build_go_static=_build_go_static
-alias ld_flag='pkg-config --cflags --libs'
-alias mvn_gen=_mvn_gen
-alias mvn_exec=_mvn_exec
-alias infile_replace=_infile_replace
-
-git config --global alias.st status
-git config --global alias.co checkout
-git config --global alias.br branch
-git config --global alias.ci commit
-git config --global alias.last 'log -l'
-git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 
 _color_print() {
-  content=$1
-  color=$2
+  content=$2
+  color=$1
   begin=""
   end='\E[0m'
   case $color in
@@ -183,60 +170,9 @@ _cut_line() {
   fi
 }
 
-_add_ld_library_path() {
-  export LD_LIBRARY_PATH=$1:$LD_LIBRARY_PATH
-}
-
-_add_python_path() {
-  export PYTHONPATH=$1:$PYTHONPATH
-}
-
-_build_go_static() {
-  #shift;
-  go build -ldflags "-linkmode external -extldflags '-static $@'"
-}
-
-_mvn_gen() {
-  groupid=$1
-  artifactid=$2
-  mvn archetype:generate -DgroupId=$groupid -DartifactId=$artifactid -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
-}
-
-_mvn_exec() {
-  mainclass=$1
-  shift;
-  args=$@
-  mvn exec:java -Dexec.mainClass=$mainclass -Dexec.args="$args"
-}
-
-_infile_replace() {
-  filepath=$1
-  origin=$2
-  target=$3
-  sed -i "s/$origin/$target/g" $filepath
-}
-
-# avoid rm -rf
-#mkdir -p ~/.trash
-#alias rm=trash
-#alias r=trash
-#alias rl='ls ~/.trash'
-#alias ur=undelfile
-
-#undelfile() {
-#  mv -i ~/.trash/$@ ./
-#}
-
-#trash() {
-#  mv $@ ~/.trash/
-#}
-
-#cleartrash() {
-#  read -p "clear sure?[n]" confirm
-#  [ $confirm == 'y' ] || [ $confirm == 'Y' ] && /bin/rm -rf ~/.trash/*
-#}
-
-########  programming languages toolchains related  ########
+#############################################################
+#           application specific settings                   #
+#############################################################
 
 ME=~/me
 SOFTWARE_PATH=$ME/software
@@ -245,52 +181,33 @@ DEVTOOLS_PATH=$ME/devtools
 MYCODE_PATH=$ME/mycode
 WORKSPACE_PATH=$ME/workspace
 
-# python cmdline  autocomplete
-PYTHONSTARTUP='~/.pythonstartup'
-export PYTHONSTARTUP
-
 # java path
-export JAVA_HOME=$SOFTWARE_PATH/jdk1.8.0_60
+export JAVA_HOME=$SOFTWARE_PATH/jdk1.8.0_11
 export JAVA_BIN=$JAVA_HOME/bin
 export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$SOFTWARE_PATH/tla/tlatools
 export PATH=$PATH:$JAVA_HOME/bin
+
 # maven path 
-export PATH=$PATH:$SOFTWARE_PATH/apache-maven-3.3.3/bin
+export PATH=$PATH:$SOFTWARE_PATH/apache-maven-3.3.1/bin
+
 # ant 
 export PATH=$PATH:$SOFTWARE_PATH/apache-ant-1.9.7/bin
-# scala, sbt and activator path 
+
+# scala and sbt path 
 export PATH=$PATH:$SOFTWARE_PATH/scala-2.10.4/bin
 export PATH=$PATH:$SOFTWARE_PATH/sbt/bin
 
 # gopath 
 export GOROOT=$SOFTWARE_PATH/go
-export GOPATH=$MYCODE_PATH/go
+export GOPATH=$WORKSPACE_PATH/go
 export GOBIN=$GOPATH/bin
-export PATH=$GOROOT/bin:$GOBIN:$PATH
-
-# scheme path 
-export PATH=$PATH:$SOFTWARE_PATH/scheme/bin
-export MITSCHEME_LIBRARY_PATH=$SOFTWARE_PATH/scheme/lib/mit-scheme-x86-64
+export PATH=$GOROOT/bin:$PATH:$GOBIN
 
 # cmake 3.5
 export PATH=$PATH:$SOFTWARE_PATH/cmake-3.5.2-Linux-x86_64/bin
 
-# tracing and performance tools
-export PATH=$PATH:$SOFTWARE_PATH/tracing_tools/systemtap/bin
-export PATH=$PATH:$SOFTWARE_PATH/tracing_tools/perf-tools/bin
-export PATH=$PATH:$SOFTWARE_PATH/tracing_tools/FlameGraph
+# docker 
+export PATH=$SOFTWARE_PATH/docker:$PATH
 
-######## some applications related ########
-
-# spark path
-export PATH=$PATH:$SOFTWARE_PATH/spark-1.3.1/bin
-export SPARK_HOME=$SOFTWARE_PATH/spark-1.3.1
-
-# hadoop path 
-export HADOOP_HOME=$SOFTWARE_PATH/hadoop-2.6.0
-export HADOOP_CLASSPATH=$JAVA_HOME/lib/tools.jar
-export PATH=$PATH:$SOFTWARE_PATH/hadoop-2.6.0/bin
-
-# tomcat 
-export PATH=$PATH:$SOFTWARE_PATH/apache-tomcat-9.0.0/bin
-
+# nodejs
+export PATH=/home/tan/me/software/node-v6.9.5-linux-x64/bin:$PATH
