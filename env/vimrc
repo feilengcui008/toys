@@ -108,7 +108,7 @@ Plugin 'SirVer/ultisnips'                                      " snippets engine
 Plugin 'fatih/vim-go'                                          " go support, need gocode daemon for autocomplete
 Plugin 'Valloric/YouCompleteMe'                                " syntax autocomplete for c/c++ etc
 Plugin 'Markdown-syntax'                                       " markdown
-"Plugin 'ervandew/eclim'                                        " eclim for java
+"Plugin 'ervandew/eclim'                                       " eclim for java
 call vundle#end()
 filetype plugin indent on                                      " reopen filetype plugin
 
@@ -126,7 +126,15 @@ set expandtab                                                  " use spaces to r
 set tags=tags                                                  " ctags
 set tags+=./tags;/                                             " support tags in current dir and parent dir
 
+" map key to use <F5> to remove EOL space
 nnoremap <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
+
+" cursorline and cursorcolumn
+set cursorline
+set cursorcolumn
+highlight CursorLine   cterm=NONE ctermbg=blue ctermfg=yellow guibg=NONE guifg=NONE
+highlight CursorColumn cterm=NONE ctermbg=blue ctermfg=yellow guibg=NONE guifg=NONE
+set colorcolumn=100
 
 let g:winManagerWindowLayout="TagList|FileExplorer"            " window manager layout
 let g:winManagerWidth=35                                       " width
