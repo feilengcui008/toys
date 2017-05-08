@@ -1,0 +1,50 @@
+### Generic files to ignore
+*~
+*.lock
+*.swp
+*.out
+*.patch
+*.log
+*.sql
+*.sqlite
+
+### OS junk files
+.DS_Store
+.DS_Store?
+*.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+
+### Windows junk files
+[Tt]humbs.db
+*.lnk
+
+### Patch/diff artifacts.
+*.patch
+*.diff
+*.orig
+*.rej
+interdiff*.txt
+
+### Other SCM
+.svn
+
+### emacs artifacts.
+*~
+\#*\#
+
+### Vim swap file
+*.swp
+
+### PhpStorm
+.idea
+
+### Eclipse based
+.buildpath
+.settings
+.project
+
+### Netbeans
+nbproject

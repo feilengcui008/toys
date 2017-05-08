@@ -1,0 +1,28 @@
+[user]
+  email = feilengcui008@gmail.com
+  name = feilengcui008
+
+[http]
+  sslverify = false
+
+[alias]
+  change = codereview change
+  gofmt = codereview gofmt
+  mail = codereview mail
+  pending = codereview pending
+  submit = codereview submit
+  sync = codereview sync
+
+  st = status
+  co = checkout
+  br = branch
+  ci = commit
+  cp = cherry-pick
+  df = diff
+  pl = pull
+  rb = rebase
+  last = log -l
+  lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen    (%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+
+[core]
+  excludefile=~/.gitignore_global
