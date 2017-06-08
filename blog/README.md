@@ -1,1 +1,0 @@
-a simple blog made with laravel framework
