@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BASIC_TOOLS="vim git"
+BASIC_TOOLS="vim git subversion"
 COMPILING_TOOLS="gcc g++ gdb llvm clang clang++ binutils"
 SYSTEM_MONITOR_TRACING_PERF_TOOLS="sysstat dstat htop iotop iftop tcpdump systemtap ethtool ngrep"
 USER_TOOLS="tmux jq proxychains youtube-dl axel"
