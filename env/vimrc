@@ -110,6 +110,7 @@ Plugin 'Valloric/YouCompleteMe'                                " syntax autocomp
 Plugin 'Markdown-syntax'                                       " markdown
 Plugin 'altercation/vim-colors-solarized'                      " solarized theme
 Plugin 'blueshirts/darcula'                                    " darcula theme
+Plugin 'kien/ctrlp.vim'                                        " ctrl-p plugin
 "Plugin 'ervandew/eclim'                                       " eclim for java
 call vundle#end()
 filetype plugin indent on                                      " reopen filetype plugin
@@ -140,6 +141,8 @@ set cursorline
 set cursorcolumn
 highlight CursorLine   cterm=NONE ctermbg=blue ctermfg=yellow guibg=NONE guifg=NONE
 highlight CursorColumn cterm=NONE ctermbg=blue ctermfg=yellow guibg=NONE guifg=NONE
+highlight ColorColumn guibg=Red
+highlight ColorColumn ctermbg=Red
 set colorcolumn=100
 
 let g:winManagerWindowLayout="TagList|FileExplorer"            " window manager layout
