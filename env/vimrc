@@ -108,6 +108,8 @@ Plugin 'SirVer/ultisnips'                                      " snippets engine
 Plugin 'fatih/vim-go'                                          " go support, need gocode daemon for autocomplete
 Plugin 'Valloric/YouCompleteMe'                                " syntax autocomplete for c/c++ etc
 Plugin 'Markdown-syntax'                                       " markdown
+Plugin 'altercation/vim-colors-solarized'                      " solarized theme
+Plugin 'blueshirts/darcula'                                    " darcula theme
 "Plugin 'ervandew/eclim'                                       " eclim for java
 call vundle#end()
 filetype plugin indent on                                      " reopen filetype plugin
@@ -119,8 +121,12 @@ filetype plugin indent on                                      " reopen filetype
 
 set nu                                                         " show line number
 set nobackup                                                   " do not backup file
-color evening                                                  " color theme
-set tabstop=2                                                  " number of spaces for a tab
+set t_Co=256                                                   " make working in tmux etc
+set background=dark                                            " background
+color darcula                                                  " color theme
+"color solarized                                               " color theme
+"colorscheme darcula                                           " color theme
+set tabstop=4                                                  " number of spaces for a tab
 set shiftwidth=2                                               " number of spaces for each auto indent
 set expandtab                                                  " use spaces to replace tab
 set tags=tags                                                  " ctags

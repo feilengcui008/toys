@@ -16,13 +16,21 @@ for ele in $DIRS ; do
 done
 
 # get dotfiles
-cp $CUR/vimrc ~/.vimrc 
+cp $CUR/vimrc ~/.vimrc
+ln -s ~/.vimrc ~/.config/nvim/init.vim
+ln -s ~/.vim ~/.config/nvim
 cp $CUR/tmux.conf ~/.tmux.conf
 cp $CUR/gitignore_global ~/.gitignore_global
 cp $CUR/gitconfig ~/.gitconfig
 cp $CUR/proxychains.conf ~/.proxychains.conf
 cp $CUR/bashrc ~/.bashrc
 source ~/.bashrc
+
+# install pip pkgs
+PIP_PKGS="neovim ipython"
+for ele in $PIP_PKGS ; do
+  sudo pip install $ele
+done
 
 # install font
 $CUR/install_gofont.sh
