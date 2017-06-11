@@ -223,8 +223,8 @@ noremap <M-x> :q<CR>
 noremap <C-b> <C-w>
 
 " neovim terminal
-tnoremap <Esc> <C-\><C-n>
-noremap <S-t> :ToggleTerminal<CR>
+"tnoremap <Esc> <C-\><C-n>
+"noremap <S-t> :ToggleTerminal<CR>
 
 " cursorline and cursorcolumn
 set cursorline
