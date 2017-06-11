@@ -136,15 +136,18 @@ set tags=tags                                                  " ctags
 set tags+=./tags;/                                             " support tags in current dir and parent dir
 
 " run when start vim
-"autocmd VimEnter * StartUp
+autocmd VimEnter * StartUp
 function! s:start_up()
     WMToggle
-    vsplit
-    wincmd l
-    terminal
-    vertical resize 0
-    stopinsert
-    wincmd h
+    " for nvim to start a terminal window
+    if has('nvim')
+        vsplit
+        wincmd l
+        terminal
+        vertical resize 0
+        stopinsert
+        wincmd h
+    endif
 endfunction
 command! StartUp call s:start_up()
 
@@ -158,7 +161,7 @@ command! -nargs=* WinGo call s:win_by_bufname(<q-args>)
 
 " switch to lastest accessed window
 function! s:last_window()
-    call feedkeys("\<C-w>\<C-p>")  
+    call feedkeys("\<C-w>\<C-p>")
 endfunction
 command! LastWindow call s:last_window()
 
@@ -168,33 +171,36 @@ function! s:left_window()
 endfunction
 command! LeftWindow call s:left_window()
 
-" hide terminal(currently col size to zero)
-function! s:hide_terminal()
-    WinGo term
-    vertical resize 0
-    LeftWindow
-endfunction
-command! HideTerminal call s:hide_terminal()
+" for nvim terminal
+if has('nvim')
+    " hide terminal(currently col size to zero)
+    function! s:hide_terminal()
+        WinGo term
+        vertical resize 0
+        LeftWindow
+    endfunction
+    command! HideTerminal call s:hide_terminal()
 
-" show terminal
-function! s:show_terminal()
-    WinGo term
-    vertical resize 40
-endfunction
-command! ShowTerminal call s:show_terminal()
+    " show terminal
+    function! s:show_terminal()
+        WinGo term
+        vertical resize 40
+    endfunction
+    command! ShowTerminal call s:show_terminal()
 
-" terminal toggle
-let g:terminal_status=0
-function! s:toggle_terminal()
-    if g:terminal_status
-        HideTerminal
-        let g:terminal_status=0
-    else
-        ShowTerminal
-        let g:terminal_status=1
-    endif
-endfunction
-command! ToggleTerminal call s:toggle_terminal()
+    " terminal toggle
+    let g:terminal_status=0
+    function! s:toggle_terminal()
+        if g:terminal_status
+            HideTerminal
+            let g:terminal_status=0
+        else
+            ShowTerminal
+            let g:terminal_status=1
+        endif
+    endfunction
+    command! ToggleTerminal call s:toggle_terminal()
+endif
 
 
 " map key to use <F5> to remove EOL space
@@ -222,9 +228,11 @@ noremap <M-Right> <C-w><Right>
 noremap <M-x> :q<CR>
 noremap <C-b> <C-w>
 
-" neovim terminal
-"tnoremap <Esc> <C-\><C-n>
-"noremap <S-t> :ToggleTerminal<CR>
+" only map for neovim terminal
+if has('nvim')
+    tnoremap <Esc> <C-\><C-n>
+    noremap <S-t> :ToggleTerminal<CR>
+endif
 
 " cursorline and cursorcolumn
 set cursorline
@@ -244,9 +252,9 @@ set colorcolumn=100
 " ================================================================= "
 
 
-" let g:winManagerWindowLayout="TagList|FileExplorer"           " window manager layout
+" let g:winManagerWindowLayout="TagList|FileExplorer"          " window manager layout
 let g:winManagerWindowLayout="FileExplorer"                    " window manager layout
-let g:winManagerWidth=15                                       " width
+let g:winManagerWidth=20                                       " width
 noremap wm :WMToggle<CR>
 
 
@@ -270,18 +278,18 @@ let g:airline_theme="hybrid"                                   " airline theme
 
 
 " YouCompleteMe settings
-let g:ycm_global_ycm_extra_conf="~/.vim/.ycm_extra_conf.py" 
+let g:ycm_global_ycm_extra_conf="~/.vim/.ycm_extra_conf.py"
 let g:ycm_key_list_select_completion=[]
 let g:ycm_key_list_previous_completion=[]
 let g:ycm_confirm_extra_conf=0
 
 
 " popup preview window for autocomplete
-set completeopt=longest,menu                                   
+set completeopt=longest,menu
 
 
 " supertab default compeletion type
-let g:SuperTabDefaultCompletionType='context'                  
+let g:SuperTabDefaultCompletionType='context'
 
 
 " eclim related settings
