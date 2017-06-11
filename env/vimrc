@@ -136,13 +136,17 @@ set tags=tags                                                  " ctags
 set tags+=./tags;/                                             " support tags in current dir and parent dir
 
 " run when start vim
-autocmd VimEnter * WMToggle
-autocmd VimEnter * vsplit
-autocmd VimEnter * wincmd l
-autocmd VimEnter * terminal
-autocmd VimEnter * vertical resize 40
-autocmd VimEnter * stopinsert
-autocmd VimEnter * wincmd h
+"autocmd VimEnter * StartUp
+function! s:start_up()
+    WMToggle
+    vsplit
+    wincmd l
+    terminal
+    vertical resize 0
+    stopinsert
+    wincmd h
+endfunction
+command! StartUp call s:start_up()
 
 " switch to window by name regex
 function! s:win_by_bufname(bufname)
@@ -225,8 +229,8 @@ noremap <S-t> :ToggleTerminal<CR>
 " cursorline and cursorcolumn
 set cursorline
 set cursorcolumn
-autocmd InsertEnter * highlight CursorLine   cterm=NONE ctermbg=NONE ctermfg=white guibg=NONE guifg=NONE
-autocmd InsertEnter * highlight CursorColumn cterm=NONE ctermbg=NONE ctermfg=white guibg=NONE guifg=NONE
+autocmd InsertEnter * highlight CursorLine   cterm=NONE ctermbg=NONE ctermfg=grey guibg=NONE guifg=NONE
+autocmd InsertEnter * highlight CursorColumn cterm=NONE ctermbg=NONE ctermfg=grey guibg=NONE guifg=NONE
 autocmd InsertLeave * highlight CursorLine cterm=NONE ctermbg=NONE ctermfg=NONE guibg=NONE guifg=NONE
 autocmd InsertLeave * highlight CursorColumn cterm=NONE ctermbg=NONE ctermfg=NONE guibg=NONE guifg=NONE
 highlight ColorColumn guibg=Red
