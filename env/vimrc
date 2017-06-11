@@ -111,6 +111,7 @@ Plugin 'Markdown-syntax'                                       " markdown
 Plugin 'altercation/vim-colors-solarized'                      " solarized theme
 Plugin 'blueshirts/darcula'                                    " darcula theme
 Plugin 'kien/ctrlp.vim'                                        " ctrl-p plugin
+Plugin 'rhysd/vim-clang-format'                                " clang-format support
 "Plugin 'ervandew/eclim'                                       " eclim for java
 call vundle#end()
 filetype plugin indent on                                      " reopen filetype plugin
@@ -128,13 +129,32 @@ color darcula                                                  " color theme
 "color solarized                                               " color theme
 "colorscheme darcula                                           " color theme
 set tabstop=4                                                  " number of spaces for a tab
-set shiftwidth=2                                               " number of spaces for each auto indent
+set shiftwidth=4                                               " number of spaces for each auto indent
 set expandtab                                                  " use spaces to replace tab
 set tags=tags                                                  " ctags
 set tags+=./tags;/                                             " support tags in current dir and parent dir
 
 " map key to use <F5> to remove EOL space
-nnoremap <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
+noremap <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
+" map buffer ops
+noremap bn :bnext<CR>
+noremap bp :bprevious<CR>
+noremap bl :buffers<CR>
+" map tab ops
+noremap tn :tabnew<CR>
+noremap tc :tabclose<CR>
+noremap tl :tabs<CR>
+noremap gt :tabnext<CR>
+noremap gT :tabprevious<CR>
+" window ops
+noremap <M-Bslash> :vsplit<CR>
+noremap <M--> :split<CR>
+noremap <M-Up> <C-w><Up>
+noremap <M-Down> <C-w><Down>
+noremap <M-Left> <C-w><Left>
+noremap <M-Right> <C-w><Right>
+noremap <C-b> <C-w>
+
 
 " cursorline and cursorcolumn
 set cursorline
@@ -147,12 +167,12 @@ set colorcolumn=100
 
 let g:winManagerWindowLayout="TagList|FileExplorer"            " window manager layout
 let g:winManagerWidth=35                                       " width
-nmap wm :WMToogle<cr>
+noremap wm :WMToggle<CR>
 
 set laststatus=2                                               " always show status on the last window
-let g:airline_section_b = '%{fugitive#statusline()}'           " airline vim-fugitive git branch status
-let g:airline_section_c = '%{strftime("%c")}'                  " airline time
-let g:airline#extensions#tabline#enabled = 1                   " tabline
+let g:airline_section_b='%{fugitive#statusline()}'             " airline vim-fugitive git branch status
+let g:airline_section_c='%{strftime("%c")}'                    " airline time
+let g:airline#extensions#tabline#enabled=1                     " tabline
 let g:airline_theme="hybrid"                                   " airline theme
 
 "set encoding=utf-8                                            " encoding used inside vim
@@ -164,18 +184,25 @@ let g:airline_theme="hybrid"                                   " airline theme
 "set guioptions-=L                                             " left-hand scrollbar when window is splitted
 "set guifont=Consolas:h12                                      " font family and font size
 
-let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"  " conf for YouCompleteMe
+let g:ycm_global_ycm_extra_conf="~/.vim/.ycm_extra_conf.py"    " conf for YouCompleteMe
 let g:ycm_key_list_select_completion=[]
 let g:ycm_key_list_previous_completion=[]
-let g:ycm_confirm_extra_conf = 0
+let g:ycm_confirm_extra_conf=0
 
 
 set completeopt=longest,menu                                   " popup preview window for autocomplete
 
-let g:SuperTabDefaultCompletionType = 'context'                " supertab default compeletion type
+let g:SuperTabDefaultCompletionType='context'                  " supertab default compeletion type
 
-"let g:EclimCompletionMethod = 'omnifunc'                      " eclim plugin for java autocomplete, don't use with YouCompleteMe
+"let g:EclimCompletionMethod='omnifunc'                        " eclim plugin for java autocomplete, don't use with YouCompleteMe
 "set runtimepath-=~/.vim/bundle/YouCompleteMe                  " when use eclim, remove YouCompleteMe
 
-let g:gitgutter_real_time = 1                                  " git gutter status realtime
-let g:gitgutter_eager = 1                                      " running eagerly
+let g:gitgutter_real_time=1                                    " git gutter status realtime
+let g:gitgutter_eager=1                                        " running eagerly
+
+let g:clang_format#code_style="Google"                         " clang-format 
+let g:clang_format#detect_style_file=1
+let g:clang_format#auto_format=1
+let g:clang_format#auto_format_on_insert_leave=1
+let g:clang_format#auto_formatexpr=1
+noremap <C-S-i> :ClangFormat<CR>
