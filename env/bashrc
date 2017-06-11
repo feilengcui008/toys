@@ -200,17 +200,17 @@ export JAVA_BIN=$JAVA_HOME/bin
 export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$SOFTWARE_PATH/tla/tlatools
 export PATH=$PATH:$JAVA_HOME/bin
 
-# maven path 
+# maven path
 export PATH=$PATH:$SOFTWARE_PATH/apache-maven-3.3.1/bin
 
-# ant 
+# ant
 export PATH=$PATH:$SOFTWARE_PATH/apache-ant-1.9.7/bin
 
-# scala and sbt path 
+# scala and sbt path
 export PATH=$PATH:$SOFTWARE_PATH/scala-2.10.4/bin
 export PATH=$PATH:$SOFTWARE_PATH/sbt/bin
 
-# gopath 
+# gopath
 export GOROOT=$SOFTWARE_PATH/go
 export GOPATH=$WORKSPACE_PATH/go
 export GOBIN=$GOPATH/bin
@@ -219,7 +219,7 @@ export PATH=$GOROOT/bin:$PATH:$GOBIN
 # cmake 3.5
 export PATH=$PATH:$SOFTWARE_PATH/cmake-3.5.2-Linux-x86_64/bin
 
-# docker 
+# docker
 export PATH=$SOFTWARE_PATH/docker:$PATH
 
 # nodejs

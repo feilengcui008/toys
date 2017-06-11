@@ -153,14 +153,21 @@ noremap <M-Up> <C-w><Up>
 noremap <M-Down> <C-w><Down>
 noremap <M-Left> <C-w><Left>
 noremap <M-Right> <C-w><Right>
+noremap <M-x> :q<CR>
 noremap <C-b> <C-w>
+" neovim terminal
+tnoremap <Esc> <C-\><C-n>
 
 
 " cursorline and cursorcolumn
 set cursorline
 set cursorcolumn
-highlight CursorLine   cterm=NONE ctermbg=blue ctermfg=yellow guibg=NONE guifg=NONE
+highlight CursorLine cterm=NONE ctermbg=blue ctermfg=yellow guibg=NONE guifg=NONE
 highlight CursorColumn cterm=NONE ctermbg=blue ctermfg=yellow guibg=NONE guifg=NONE
+autocmd InsertEnter * highlight CursorLine   cterm=NONE ctermbg=None ctermfg=None guibg=NONE guifg=NONE
+autocmd InsertEnter * highlight CursorColumn cterm=NONE ctermbg=None ctermfg=None guibg=NONE guifg=NONE
+autocmd InsertLeave * highlight CursorLine cterm=NONE ctermbg=blue ctermfg=yellow guibg=NONE guifg=NONE
+autocmd InsertLeave * highlight CursorColumn cterm=NONE ctermbg=blue ctermfg=yellow guibg=NONE guifg=NONE
 highlight ColorColumn guibg=Red
 highlight ColorColumn ctermbg=Red
 set colorcolumn=100
@@ -200,7 +207,7 @@ let g:SuperTabDefaultCompletionType='context'                  " supertab defaul
 let g:gitgutter_real_time=1                                    " git gutter status realtime
 let g:gitgutter_eager=1                                        " running eagerly
 
-let g:clang_format#code_style="Google"                         " clang-format 
+let g:clang_format#code_style="Google"                         " clang-format
 let g:clang_format#detect_style_file=1
 let g:clang_format#auto_format=1
 let g:clang_format#auto_format_on_insert_leave=1
