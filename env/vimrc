@@ -1,6 +1,6 @@
-" ================================================================="
-" //                   default system settings                   //
-" ================================================================="
+" ================================================================= "
+" //                   default system settings                   // "
+" ================================================================= "
 
 " startup mode: evim(vim -y)
 if v:progname =~? "evim"
@@ -78,9 +78,9 @@ if !exists(":DiffOrig")
 endif
 
 
-" ================================================================="
-" //                     vundle settings                         //
-" ================================================================="
+" ================================================================= "
+" //                     vundle settings                         // "
+" ================================================================= "
 
 " Brief help
 " :PluginList       - lists configured plugins
@@ -117,35 +117,97 @@ call vundle#end()
 filetype plugin indent on                                      " reopen filetype plugin
 
 
-" ================================================================="
-" //                     personal settings                       //
-" ================================================================="
+
+
+" ================================================================= "
+" //                     personal settings                       // "
+" ================================================================= "
 
 set nu                                                         " show line number
 set nobackup                                                   " do not backup file
 set t_Co=256                                                   " make working in tmux etc
 set background=dark                                            " background
 color darcula                                                  " color theme
-"color solarized                                               " color theme
-"colorscheme darcula                                           " color theme
+"colorscheme solarized                                         " color theme
 set tabstop=4                                                  " number of spaces for a tab
 set shiftwidth=4                                               " number of spaces for each auto indent
 set expandtab                                                  " use spaces to replace tab
 set tags=tags                                                  " ctags
 set tags+=./tags;/                                             " support tags in current dir and parent dir
 
+" run when start vim
+autocmd VimEnter * WMToggle
+autocmd VimEnter * vsplit
+autocmd VimEnter * wincmd l
+autocmd VimEnter * terminal
+autocmd VimEnter * vertical resize 40
+autocmd VimEnter * stopinsert
+autocmd VimEnter * wincmd h
+
+" switch to window by name regex
+function! s:win_by_bufname(bufname)
+    let bufmap = map(range(1, winnr('$')), '[bufname(winbufnr(v:val)), v:val]')
+    let thewindow = filter(bufmap, 'v:val[0] =~ a:bufname')[0][1]
+    execute thewindow 'wincmd w'
+endfunction
+command! -nargs=* WinGo call s:win_by_bufname(<q-args>)
+
+" switch to lastest accessed window
+function! s:last_window()
+    call feedkeys("\<C-w>\<C-p>")  
+endfunction
+command! LastWindow call s:last_window()
+
+" switch to lastest accessed window
+function! s:left_window()
+    wincmd h
+endfunction
+command! LeftWindow call s:left_window()
+
+" hide terminal(currently col size to zero)
+function! s:hide_terminal()
+    WinGo term
+    vertical resize 0
+    LeftWindow
+endfunction
+command! HideTerminal call s:hide_terminal()
+
+" show terminal
+function! s:show_terminal()
+    WinGo term
+    vertical resize 40
+endfunction
+command! ShowTerminal call s:show_terminal()
+
+" terminal toggle
+let g:terminal_status=0
+function! s:toggle_terminal()
+    if g:terminal_status
+        HideTerminal
+        let g:terminal_status=0
+    else
+        ShowTerminal
+        let g:terminal_status=1
+    endif
+endfunction
+command! ToggleTerminal call s:toggle_terminal()
+
+
 " map key to use <F5> to remove EOL space
 noremap <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
+
 " map buffer ops
 noremap bn :bnext<CR>
 noremap bp :bprevious<CR>
 noremap bl :buffers<CR>
+
 " map tab ops
 noremap tn :tabnew<CR>
 noremap tc :tabclose<CR>
 noremap tl :tabs<CR>
 noremap gt :tabnext<CR>
 noremap gT :tabprevious<CR>
+
 " window ops
 noremap <M-Bslash> :vsplit<CR>
 noremap <M--> :split<CR>
@@ -155,33 +217,44 @@ noremap <M-Left> <C-w><Left>
 noremap <M-Right> <C-w><Right>
 noremap <M-x> :q<CR>
 noremap <C-b> <C-w>
+
 " neovim terminal
 tnoremap <Esc> <C-\><C-n>
-
+noremap <S-t> :ToggleTerminal<CR>
 
 " cursorline and cursorcolumn
 set cursorline
 set cursorcolumn
-highlight CursorLine cterm=NONE ctermbg=blue ctermfg=yellow guibg=NONE guifg=NONE
-highlight CursorColumn cterm=NONE ctermbg=blue ctermfg=yellow guibg=NONE guifg=NONE
-autocmd InsertEnter * highlight CursorLine   cterm=NONE ctermbg=None ctermfg=None guibg=NONE guifg=NONE
-autocmd InsertEnter * highlight CursorColumn cterm=NONE ctermbg=None ctermfg=None guibg=NONE guifg=NONE
-autocmd InsertLeave * highlight CursorLine cterm=NONE ctermbg=blue ctermfg=yellow guibg=NONE guifg=NONE
-autocmd InsertLeave * highlight CursorColumn cterm=NONE ctermbg=blue ctermfg=yellow guibg=NONE guifg=NONE
+autocmd InsertEnter * highlight CursorLine   cterm=NONE ctermbg=NONE ctermfg=white guibg=NONE guifg=NONE
+autocmd InsertEnter * highlight CursorColumn cterm=NONE ctermbg=NONE ctermfg=white guibg=NONE guifg=NONE
+autocmd InsertLeave * highlight CursorLine cterm=NONE ctermbg=NONE ctermfg=NONE guibg=NONE guifg=NONE
+autocmd InsertLeave * highlight CursorColumn cterm=NONE ctermbg=NONE ctermfg=NONE guibg=NONE guifg=NONE
 highlight ColorColumn guibg=Red
 highlight ColorColumn ctermbg=Red
 set colorcolumn=100
 
-let g:winManagerWindowLayout="TagList|FileExplorer"            " window manager layout
-let g:winManagerWidth=35                                       " width
+
+
+" ================================================================= "
+" //                     plugin settings                         // "
+" ================================================================= "
+
+
+" let g:winManagerWindowLayout="TagList|FileExplorer"           " window manager layout
+let g:winManagerWindowLayout="FileExplorer"                    " window manager layout
+let g:winManagerWidth=15                                       " width
 noremap wm :WMToggle<CR>
 
+
+" airline options
 set laststatus=2                                               " always show status on the last window
 let g:airline_section_b='%{fugitive#statusline()}'             " airline vim-fugitive git branch status
 let g:airline_section_c='%{strftime("%c")}'                    " airline time
 let g:airline#extensions#tabline#enabled=1                     " tabline
 let g:airline_theme="hybrid"                                   " airline theme
 
+
+" encodings and settings in gui env
 "set encoding=utf-8                                            " encoding used inside vim
 "set fileencoding=utf-8                                        " encoding for file content, auto converted when write file
 "set termencoding=utf-8                                        " terminal encoding from keybord input
@@ -191,22 +264,33 @@ let g:airline_theme="hybrid"                                   " airline theme
 "set guioptions-=L                                             " left-hand scrollbar when window is splitted
 "set guifont=Consolas:h12                                      " font family and font size
 
-let g:ycm_global_ycm_extra_conf="~/.vim/.ycm_extra_conf.py"    " conf for YouCompleteMe
+
+" YouCompleteMe settings
+let g:ycm_global_ycm_extra_conf="~/.vim/.ycm_extra_conf.py" 
 let g:ycm_key_list_select_completion=[]
 let g:ycm_key_list_previous_completion=[]
 let g:ycm_confirm_extra_conf=0
 
 
-set completeopt=longest,menu                                   " popup preview window for autocomplete
+" popup preview window for autocomplete
+set completeopt=longest,menu                                   
 
-let g:SuperTabDefaultCompletionType='context'                  " supertab default compeletion type
 
+" supertab default compeletion type
+let g:SuperTabDefaultCompletionType='context'                  
+
+
+" eclim related settings
 "let g:EclimCompletionMethod='omnifunc'                        " eclim plugin for java autocomplete, don't use with YouCompleteMe
 "set runtimepath-=~/.vim/bundle/YouCompleteMe                  " when use eclim, remove YouCompleteMe
 
+
+" gitgutter settings
 let g:gitgutter_real_time=1                                    " git gutter status realtime
 let g:gitgutter_eager=1                                        " running eagerly
 
+
+" clang-format settings
 let g:clang_format#code_style="Google"                         " clang-format
 let g:clang_format#detect_style_file=1
 let g:clang_format#auto_format=1
