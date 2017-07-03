@@ -1,3 +1,3 @@
-python_spider
+spiders
 ======================
 two toy spiders with scrapy and BeautifulSoup...
