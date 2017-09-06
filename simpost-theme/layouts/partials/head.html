@@ -1,0 +1,21 @@
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{{ with .Site.Params.name }}<meta name="author" content="{{ . }}">{{ end }}
+{{ .Hugo.Generator }}
+<title>{{ .Title }}{{ if .IsHome }} &middot; {{ .Site.Title }}{{ end }}</title>
+<link rel="shortcut icon" href="{{ "images/favicon.ico" | absURL }}">
+<link rel="stylesheet" href="{{ "css/style.css" | absURL }}">
+<link rel="stylesheet" href="{{ "css/main.css" | absURL }}">
+{{ range .Site.Params.customCSS }}
+<link rel="stylesheet" href="{{ . | absURL }}">
+{{ end }}
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/darcula.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<!--
+<script src="/js/highlightjs-line-numbers.min.js"></script>
+<script>hljs.initLineNumbersOnLoad();</script>
+-->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+

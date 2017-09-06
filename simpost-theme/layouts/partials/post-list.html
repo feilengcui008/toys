@@ -1,0 +1,14 @@
+<div class="personal_content content-archive">
+  <div class="post-list-box archive-body">
+    <ul class="list-post">
+
+    {{ range where .Paginator.Pages "Section" "ne" "" }}
+        <li class="item-post item">
+            <a class="post-title" href='{{ .URL }}'>{{ .LinkTitle }}</a>
+            <span class="post-date">{{ .Date.Format "01-02-2006"}}</span>
+        </li>
+    {{ end }}
+    </ul>
+  </div>
+  {{ partial "pagination.html" . }}
+</div>

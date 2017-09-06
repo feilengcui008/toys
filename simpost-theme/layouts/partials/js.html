@@ -1,0 +1,11 @@
+<script src="{{ "js/scroll-spy.js" | absURL }}"></script>
+<script src="{{ "js/head.js" | absURL }}"></script>
+<script src="{{ "js/bundle.js" | absURL }}"></script>
+<script src="{{ "js/fastclick.js" | absURL }}"></script>
+<script src="{{ "js/util.js" | absURL }}"></script>
+<script src="{{ "js/zenscroll.js" | absURL }}"></script>
+<script src="{{ "js/app.js" | absURL }}"></script>
+
+{{ range .Site.Params.customJS }}
+<script src="{{ . | absURL }}"></script>
+{{ end }}

@@ -1,0 +1,16 @@
+name = "simpost-theme"
+license = "MIT"
+description = "A simplest theme for writing blog posts."
+homepage = "https://github.com/feilengcui008/simpost-theme"
+tags = ["blog", "disqus", "google analytics", "rss", "syntax highlighting"]
+features = ["disqus", "syntax highlighting", "blog", "pagination"]
+min_version = 0.10
+
+[author]
+  name = "feilengcui008"
+  homepage = "https://feilengcui008.github.io/"
+
+[[original]]
+  name = "fexo"
+  homepage = "https://github.com/forsigner/fexo"
+  repo = "https://github.com/forsigner/fexo"

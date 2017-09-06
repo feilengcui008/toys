@@ -1,0 +1,24 @@
+{{ define "main" }}
+
+<div class="aboutdiv">
+  {{ $name := .Site.Params.name }}
+  <div class="icondiv">
+  <div class="itemdiv">
+  {{ range $key, $val := .Site.Social }}
+  <a href="{{$val}}" target="_blank"><span class="icon icon-{{$key}} dot"></span></a>
+  {{ end }}
+  </div>
+  </div>
+
+  <hr>
+
+  {{ range .Site.Params.descriptions }}
+  <div class="descdiv">
+    <span class="item-post"><span class="desctitle">{{.}}</span></span>
+  </div>
+  </br>
+  {{ end }}
+
+</div>
+
+{{ end }}

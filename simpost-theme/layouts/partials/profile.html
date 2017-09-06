@@ -1,0 +1,24 @@
+<div class="content-home text-center">
+  <a class="avatar" href="/">
+    <img src="{{ "images/avatar.jpg" | absURL }}"/>
+  </a>
+  <h1 class="name" style="font-family:'calligraffittiregular' ">
+    {{ .Site.Params.name }}
+  </h1>
+  <div class="slogan">
+    {{ .Site.Params.bio | markdownify }}
+  </div>
+  
+  <hr>
+
+  <ul class="text-center nav">
+    <li class="item">
+        <a href="/post" rel="noopener noreferrer">Blog</a>
+        <span>|</span>
+    </li>
+    <li class="item">
+        <a href="/about" rel="noopener noreferrer">About</a>
+        <span>|</span>
+    </li>
+  </ul>
+</div>

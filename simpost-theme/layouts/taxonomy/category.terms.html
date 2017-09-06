@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode | default "en" }}">
+	<head>
+    {{ partial "head.html" . }}
+  </head>
+  <body>
+    {{ partial "nav.html" . }}
+    <section id="wrapper">
+
+    <div class="personal_content">
+    <section class="category-box">
+        <div class="category-list">
+            {{ range $name, $taxonomy := .Site.Taxonomies.categories }}
+                <a class="category-item" href="{{ "/categories/" | relLangURL }}{{ $name | urlize }}">
+                    <span class="category-name">{{ $name }}</span>
+                </a>
+            {{ end }}
+        </div>
+    </section>
+    </div>
+
+    {{ partial "footer.html" . }}
+    </section>
+    {{ partial "js.html" . }}
+  </body>
+</html>
+

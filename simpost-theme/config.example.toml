@@ -1,0 +1,38 @@
+# Site settings
+baseurl = "https://feilengcui008.github.io/"
+themesDir = "themes"
+languageCode = "en-us"
+title = "不一样的天空"
+theme = "simpost-theme"
+disqusShortname = "feilengcui008"
+paginate = 12
+preserveTaxonomyNames = true
+
+# Theme settings
+[params]
+	name = "feilengcui008"
+	bio = "不一样的天空"
+	descriptions = [
+    "It's what you've done and you can do that defines you.",
+    "Thinker & Creator & Programmer",
+    "Linuxer/Gopher/Vimer & Container/Paxos & Distsys/ML",
+    "Tools I like → Linux & Go/C/C++/Python & Vim/VSCode & Git & Docker & Hugo/Markdown/LaTex...",
+    "Life & CS & EE & Psych & Fin",
+  ]
+  # customized css and js path like "css/personal.css"
+	customCSS = []
+	customJS  = []
+  # font family
+  defaultFont = "Go-Regular"
+
+[social]
+  mail = "mailto:feilengcui008@gmail.com"
+  github = "https://github.com/feilengcui008"
+  douban = "https://www.douban.com/people/feilengcui008"
+  zhihu = "https://www.zhihu.com/people/feilengcui008"
+  twitter = "https://twitter.com/feilengcui008"
+  weibo = "http://weibo.com/feilengcui008"
+
+[taxonomies]
+tag = "tags"
+category = "categories"
