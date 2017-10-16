@@ -1,12 +1,15 @@
 #!/usr/bin/env python
 # encoding: utf-8
+# author: feilengcui008@gmail.com
 
-import os
-import thread
-import requests
+""" a little tool to backup your data on douban """
+
+import os 
+import argparse 
+import requests 
 import BeautifulSoup as bs
 
-class DoubanBackuper(object):
+class DoubanBackuper(object): 
     cookie_str = ""
     cookies_dict = {}
     login_url = "https://www.douban.com/accounts/login"
@@ -17,24 +20,26 @@ class DoubanBackuper(object):
             "rating4-t": "****",
             "rating5-t": "*****",
             }
+    root = None
+    username = email = password = None
+    login = False
 
-    def __init__(self):
-        self.root = os.path.dirname(os.path.abspath(__file__))
+    def __init__(self, cookie, username, email=None, password=None, login=False):
+        self.cookie_str = cookie
+        self.username = username
+        self.email = email
+        self.password = password
+        self.login = login
+        self.root = os.path.join(os.path.dirname(os.path.abspath(__file__)), self.username)
 
-    def get_cookie_by_file(self, filepath="cookie.txt"):
-        if not os.path.exists(filepath) or not os.path.isfile(filepath):
-            print("cookie file %s not exist\n" % (filepath,))
-            return
-        with open(filepath, "r") as fp:
-            self.cookie_str = fp.read()[:-1]
-        if self.cookie_str == "":
-            print("cookie file %s is empty\n" % (filepath,))
-            return
+        if not os.path.exists(self.root):
+            os.mkdir(self.root)
 
-    def get_cookie_by_login(self, email="", password=""):
-        if not email or not password:
-            print("username or password not valid\n")
-        data = {"form_email": email, "form_password": password}
+        if self.login and not self.cookie_str:
+            self.get_cookie_by_login()
+
+    def get_cookie_by_login(self):
+        data = {"form_email": self.email, "form_password": self.password}
         resp = requests.post(self.login_url, data)
         if resp.status_code != 200:
             print("post request to %s failed with status code %d\n" % (self.login_url, resp.status_code))
@@ -47,10 +52,13 @@ class DoubanBackuper(object):
 
     def _get_with_cookie(self, url):
         resp = None
-        if len(self.cookie_str) > 0:
-            resp = requests.get(url, headers={"Cookie": self.cookie_str})
+        if not self.login:
+            resp = requests.get(url)
         else:
-            resp = requests.get(url, cookies = self.cookies_dict)
+            if len(self.cookie_str) > 0:
+                resp = requests.get(url, headers={"Cookie": self.cookie_str})
+            else:
+                resp = requests.get(url, cookies = self.cookies_dict)
         if resp is None or resp.status_code != 200:
             resp = None
         return resp
@@ -60,11 +68,12 @@ class DoubanBackuper(object):
         self.backup_video()
         self.backup_music()
         self.backup_doulist()
+        self.backup_note()
 
     def backup_book(self):
-        read_url = "https://book.douban.com/people/feilengcui008/collect"
-        wish_url = "https://book.douban.com/people/feilengcui008/wish"
-        reading_url = "https://book.douban.com/people/feilengcui008/do"
+        read_url = "https://book.douban.com/people/%s/collect" % (self.username,)
+        wish_url = "https://book.douban.com/people/%s/wish" % (self.username,)
+        reading_url = "https://book.douban.com/people/%s/do" % (self.username,)
         book_dir = os.path.join(self.root, "book")
         if not os.path.exists(book_dir):
             os.mkdir(book_dir)
@@ -120,15 +129,15 @@ class DoubanBackuper(object):
                 if read_date:
                     item_str = "%s | %s" % (item_str, read_date)
                 buf = "%s%s\n" % (buf, item_str)
-            
+
         # write to file
         with open(filepath, "wb") as fp:
             fp.write(buf.encode("utf-8"))
 
     def backup_video(self):
-        watched_url = "https://movie.douban.com/people/feilengcui008/collect"
-        wish_url = "https://movie.douban.com/people/feilengcui008/wish"
-        watching_url = "https://movie.douban.com/people/feilengcui008/do"
+        watched_url = "https://movie.douban.com/people/%s/collect" % (self.username,)
+        wish_url = "https://movie.douban.com/people/%s/wish" % (self.username,)
+        watching_url = "https://movie.douban.com/people/%s/do" % (self.username,)
         video_dir = os.path.join(self.root, "video")
         if not os.path.exists(video_dir):
             os.mkdir(video_dir)
@@ -181,15 +190,15 @@ class DoubanBackuper(object):
                 if watch_date:
                     item_str = "%s | %s" % (item_str, watch_date)
                 buf = "%s%s\n" % (buf, item_str)
-            
+
         # write to file
         with open(filepath, "wb") as fp:
             fp.write(buf.encode("utf-8"))
 
     def backup_music(self):
-        listened_url = "https://music.douban.com/people/feilengcui008/collect"
-        wish_url = "https://music.douban.com/people/feilengcui008/wish"
-        listening_url = "https://music.douban.com/people/feilengcui008/do"
+        listened_url = "https://music.douban.com/people/%s/collect" % (self.username,)
+        wish_url = "https://music.douban.com/people/%s/wish" % (self.username,)
+        listening_url = "https://music.douban.com/people/%s/do" % (self.username,)
         music_dir = os.path.join(self.root, "music")
         if not os.path.exists(music_dir):
             os.mkdir(music_dir)
@@ -243,7 +252,7 @@ class DoubanBackuper(object):
                 if listen_date:
                     item_str = "%s | %s" % (item_str, listen_date)
                 buf = "%s%s\n" % (buf, item_str)
-            
+
         # write to file
         with open(filepath, "wb") as fp:
             fp.write(buf.encode("utf-8"))
@@ -252,7 +261,7 @@ class DoubanBackuper(object):
         doulist_dir = os.path.join(self.root, "doulist")
         if not os.path.exists(doulist_dir):
             os.mkdir(doulist_dir)
-        root_url = "https://www.douban.com/people/feilengcui008/doulists/all"
+        root_url = "https://www.douban.com/people/%s/doulists/all" % (self.username,)
         resp = self._get_with_cookie(root_url)
         if not resp:
             return
@@ -260,7 +269,7 @@ class DoubanBackuper(object):
         doulist = bsp.find("ul", attrs={"class": "doulist-list"})
         lists = doulist.findAll("li")
         for lst in lists:
-            lsta = lst.find("a")
+            lsta = lst.find("h3").find("a")
             title = lsta.contents[0].strip()
             lst_url = lsta.attrs[0][1]
             temp_path = os.path.join(doulist_dir, title)
@@ -283,14 +292,65 @@ class DoubanBackuper(object):
             with open(file_path, "wb") as fp:
                 fp.write(buf.encode("utf-8"))
 
-    def backup_diary(self):
-        # TODO
-        pass
+    def backup_note(self):
+        note_dir = os.path.join(self.root, "note")
+        if not os.path.exists(note_dir):
+            os.mkdir(note_dir)
+        buf = ""
+        url = "https://www.douban.com/people/%s/notes" % (self.username,)
+        while url != None:
+            resp = self._get_with_cookie(url)
+            if resp is None:
+                print("backup_note url %s failed\n" % (url,))
+                return
+            # find next page url
+            bsp = bs.BeautifulSoup(resp.content)
+            next_pages = bsp.findAll("link", attrs={"rel": "next"})
+            if len(next_pages) > 0:
+                url = next_pages[0].attrMap["href"]
+            else:
+                url = None
+            # find all notes in this page
+            notes = bsp.findAll("div", attrs={"class": "note-container"})
+            for note in notes:
+                titlea = note.find("h3").findAll("a")[-1]
+                title = titlea.attrs[0][1]
+                link = note.attrMap["data-url"]
+                rsp = self._get_with_cookie(link)
+                bp = bs.BeautifulSoup(rsp.content)
+                contents = bp.find("div", attrs={"class": "note", "id": "link-report"}).contents
+                content = ""
+                for ele in contents:
+                    content += str(ele)
+                date = note.find("span", attrs={"class": "pub-date"}).contents[0].strip()
+                buf = buf + "%s | %s | %s\n" % (title, date, link)
 
+                with open(os.path.join(note_dir, title+".html"), "wb") as fp:
+                    fp.write(content)
+
+        with open(os.path.join(note_dir, "list.txt"), "wb") as fp:
+            fp.write(buf.encode("utf-8"))
+                
 
 def main():
-    douban = DoubanBackuper()
-    douban.get_cookie_by_file()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--username", action="store", required=True, help="username")
+    parser.add_argument("--cookie", action="store", default="cookie.txt", help="cookie file path")
+    parser.add_argument("--email", action="store", default="", help="email")
+    parser.add_argument("--password", action="store", default="", help="password")
+    parser.add_argument("--login", action="store_true", default=False, help="should using cookie or login first")
+    args = parser.parse_args()
+
+    cookie_str = ""
+    if  os.path.exists(args.cookie) and os.path.isfile(args.cookie):
+        with open(args.cookie, "r") as fp:
+            cookie_str = fp.read()[:-1]
+
+    if args.login and cookie_str == "" and (args.email == "" or args.password == ""):
+        print("cookie or (username, password) must be set\n")
+        return
+
+    douban = DoubanBackuper(cookie_str, args.username, args.email, args.password, args.login)
     douban.backup()
 
 if __name__ == '__main__':
