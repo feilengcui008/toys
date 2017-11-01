@@ -63,6 +63,9 @@ class DoubanBackuper(object):
             resp = None
         return resp
 
+    def _clean_name(self, name):
+        return name.replace("/", "_").replace("-", "_")
+
     def backup(self):
         self.backup_book()
         self.backup_video()
@@ -270,7 +273,7 @@ class DoubanBackuper(object):
         lists = doulist.findAll("li")
         for lst in lists:
             lsta = lst.find("h3").find("a")
-            title = lsta.contents[0].strip()
+            title = self._clean_name(lsta.contents[0].strip())
             lst_url = lsta.attrs[0][1]
             temp_path = os.path.join(doulist_dir, title)
             if not os.path.exists(temp_path):
@@ -314,7 +317,7 @@ class DoubanBackuper(object):
             notes = bsp.findAll("div", attrs={"class": "note-container"})
             for note in notes:
                 titlea = note.find("h3").findAll("a")[-1]
-                title = titlea.attrs[0][1]
+                title = self._clean_name(titlea.attrs[0][1])
                 link = note.attrMap["data-url"]
                 rsp = self._get_with_cookie(link)
                 bp = bs.BeautifulSoup(rsp.content)
