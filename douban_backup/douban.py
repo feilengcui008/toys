@@ -261,39 +261,49 @@ class DoubanBackuper(object):
             fp.write(buf.encode("utf-8"))
 
     def backup_doulist(self):
+        root_url = "https://www.douban.com/people/%s/doulists/all" % (self.username,)
+        self._backup_doulist(root_url)
+
+    def _backup_doulist(self, url):
         doulist_dir = os.path.join(self.root, "doulist")
         if not os.path.exists(doulist_dir):
             os.mkdir(doulist_dir)
-        root_url = "https://www.douban.com/people/%s/doulists/all" % (self.username,)
-        resp = self._get_with_cookie(root_url)
-        if not resp:
-            return
-        bsp = bs.BeautifulSoup(resp.content)
-        doulist = bsp.find("ul", attrs={"class": "doulist-list"})
-        lists = doulist.findAll("li")
-        for lst in lists:
-            lsta = lst.find("h3").find("a")
-            title = self._clean_name(lsta.contents[0].strip())
-            lst_url = lsta.attrs[0][1]
-            temp_path = os.path.join(doulist_dir, title)
-            if not os.path.exists(temp_path):
-                os.mkdir(temp_path)
-            # handle this list
-            buf = ""
-            resp = self._get_with_cookie(lst_url)
-            if not resp:
-                print("get doulist %s failed\n" % (title,))
-                continue
+        while url != None:
+            resp = self._get_with_cookie(url)
+            if resp is None:
+                print("backup_doulist url %s failed\n" % (url,))
+                return
             bsp = bs.BeautifulSoup(resp.content)
-            doulist_items = bsp.findAll("div", attrs={"class": "doulist-item"})
-            for item in doulist_items:
-                item_title = item.find("div", attrs={"class": "title"}).find("a")
-                item_name = item_title.contents[0].strip()
-                item_url = item_title.attrs[0][1]
-                buf = buf + "%s | %s\n" % (item_name, item_url)
-            file_path = os.path.join(temp_path, "items.txt")
-            with open(file_path, "wb") as fp:
-                fp.write(buf.encode("utf-8"))
+            next_pages = bsp.findAll("link", attrs={"rel": "next"})
+            if len(next_pages) > 0:
+                url = "https://www.douban.com%s" % (next_pages[0].attrMap["href"],)
+            else:
+                url = None
+            doulist = bsp.find("ul", attrs={"class": "doulist-list"})
+            lists = doulist.findAll("li")
+            for lst in lists:
+                lsta = lst.find("h3").find("a")
+                title = self._clean_name(lsta.contents[0].strip())
+                lst_url = lsta.attrs[0][1]
+                temp_path = os.path.join(doulist_dir, title)
+                if not os.path.exists(temp_path):
+                    os.mkdir(temp_path)
+                # handle this list
+                buf = ""
+                resp = self._get_with_cookie(lst_url)
+                if not resp:
+                    print("get doulist %s failed\n" % (title,))
+                    continue
+                bsp = bs.BeautifulSoup(resp.content)
+                doulist_items = bsp.findAll("div", attrs={"class": "doulist-item"})
+                for item in doulist_items:
+                    item_title = item.find("div", attrs={"class": "title"}).find("a")
+                    item_name = item_title.contents[0].strip()
+                    item_url = item_title.attrs[0][1]
+                    buf = buf + "%s | %s\n" % (item_name, item_url)
+                file_path = os.path.join(temp_path, "items.txt")
+                with open(file_path, "wb") as fp:
+                    fp.write(buf.encode("utf-8"))
 
     def backup_note(self):
         note_dir = os.path.join(self.root, "note")
