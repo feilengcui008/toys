@@ -67,11 +67,11 @@ class DoubanBackuper(object):
         return name.replace("/", "_").replace("-", "_")
 
     def backup(self):
-        #self.backup_book()
-        #self.backup_video()
-        #self.backup_music()
+        self.backup_book()
+        self.backup_video()
+        self.backup_music()
         self.backup_doulist()
-        #self.backup_note()
+        self.backup_note()
 
     def backup_book(self):
         read_url = "https://book.douban.com/people/%s/collect" % (self.username,)
