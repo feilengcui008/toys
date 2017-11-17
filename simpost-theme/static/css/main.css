@@ -83,6 +83,7 @@ body {
 
 .sidebar-toggle-parent {
     text-align: center;
+    display: none;
 }
 
 .sidebar-toggle {
@@ -156,7 +157,7 @@ body {
 }
 
 .descdiv {
-  width: 270px;
+  width: 300px;
   margin:0 auto;
   font-size: 15px;
 }
@@ -164,7 +165,7 @@ body {
 .desctitle {
   font-weight: bold;
   font-size: 12px;
-  max-width: 280px;
+  max-width: 300px;
   position: relative;
   display: inline-block;
   transition-duration: .5s;
@@ -177,6 +178,7 @@ body {
 .item-post:before {
   background: #1abc9c;
   margin-left: 0px;
+  margin-top: -3px;
 }
 
 .rightspan a:hover {
