@@ -67,11 +67,11 @@ class DoubanBackuper(object):
         return name.replace("/", "_").replace("-", "_")
 
     def backup(self):
-        self.backup_book()
-        self.backup_video()
-        self.backup_music()
+        #self.backup_book()
+        #self.backup_video()
+        #self.backup_music()
         self.backup_doulist()
-        self.backup_note()
+        #self.backup_note()
 
     def backup_book(self):
         read_url = "https://book.douban.com/people/%s/collect" % (self.username,)
@@ -290,17 +290,23 @@ class DoubanBackuper(object):
                     os.mkdir(temp_path)
                 # handle this list
                 buf = ""
-                resp = self._get_with_cookie(lst_url)
-                if not resp:
-                    print("get doulist %s failed\n" % (title,))
-                    continue
-                bsp = bs.BeautifulSoup(resp.content)
-                doulist_items = bsp.findAll("div", attrs={"class": "doulist-item"})
-                for item in doulist_items:
-                    item_title = item.find("div", attrs={"class": "title"}).find("a")
-                    item_name = item_title.contents[0].strip()
-                    item_url = item_title.attrs[0][1]
-                    buf = buf + "%s | %s\n" % (item_name, item_url)
+                while lst_url != None:
+                    resp = self._get_with_cookie(lst_url)
+                    if not resp:
+                        print("get doulist %s failed\n" % (title,))
+                        continue
+                    bsp = bs.BeautifulSoup(resp.content)
+                    next_list_pages = bsp.findAll("link", attrs={"rel": "next"})
+                    if len(next_list_pages) > 0:
+                        lst_url = next_list_pages[0].attrMap["href"]
+                    else:
+                        lst_url = None
+                    doulist_items = bsp.findAll("div", attrs={"class": "doulist-item"})
+                    for item in doulist_items:
+                        item_title = item.find("div", attrs={"class": "title"}).find("a")
+                        item_name = item_title.contents[0].strip()
+                        item_url = item_title.attrs[0][1]
+                        buf = buf + "%s | %s\n" % (item_name, item_url)
                 file_path = os.path.join(temp_path, "items.txt")
                 with open(file_path, "wb") as fp:
                     fp.write(buf.encode("utf-8"))
