@@ -1,0 +1,10 @@
+{
+    "host" : "127.0.0.1",
+    "port" : 8001,
+    "mode" : "epoll",
+    "keepalived" : false,
+    "timeout" : 500,
+    "max_connection" : 8000,
+    "root_dir" : "",
+    "log_dir" : "log"
+}
