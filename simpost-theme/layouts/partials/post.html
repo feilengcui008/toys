@@ -22,6 +22,9 @@
         <span class="article-meta-span"><a href="{{ "/tags/" | relLangURL}}{{ . | urlize }}">{{ . }}</a></span>
         {{ end }}
       </span>
+      <span id="{{ .URL }}" class="leancloud_visitors" data-flag-title="{{ .Title }}">
+        <span class="post-flag"><span>
+      </span>
     </div>
   </header>
 
@@ -29,3 +32,4 @@
     {{ .Content }}
   </div>
 </article>
+

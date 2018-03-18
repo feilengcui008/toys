@@ -1,6 +1,21 @@
 {{ define "main" }}
 
 <div class="aboutdiv">
+
+
+<div class="content-home-about">
+  <a class="avatar" href="/">
+    <img src="{{ "images/avatar.jpg" | absURL }}"/>
+  </a>
+  <h1 class="name" style="font-family:'calligraffittiregular' ">
+    {{ .Site.Params.name }}
+  </h1>
+  <div class="slogan">
+    {{ .Site.Params.bio | markdownify }}
+  </div>
+</div>
+
+
   {{ $name := .Site.Params.name }}
   <div class="icondiv">
   <div class="itemdiv">
@@ -14,7 +29,7 @@
 
   {{ range .Site.Params.descriptions }}
   <div class="descdiv">
-    <span class="item-post"><span class="desctitle">{{.}}</span></span>
+      <span class="item-post"><span class="desctitle">{{.}}</span></span>
   </div>
   </br>
   {{ end }}

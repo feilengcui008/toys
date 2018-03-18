@@ -5,6 +5,10 @@
     {{ range where .Paginator.Pages "Section" "ne" "" }}
         <li class="item-post item">
             <a class="post-title" href='{{ .URL }}'>{{ .LinkTitle }}</a>
+            <span id='{{ .URL  }}' class="leancloud_visitors">
+                <span class="leancloud-visitors-count"></span>
+                <span class="post-list-flag"></span>
+            </span>
             <span class="post-date">{{ .Date.Format "01-02-2006"}}</span>
         </li>
     {{ end }}

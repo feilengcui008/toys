@@ -1,11 +1,11 @@
 body {
-  font-family: "Go-Regular";
+  font-family: "Futura-Medium";
 }
 
 .personal_content {
   margin: 40px auto 80px;
   border-left: 0px solid #f9f9f9;
-  width: 35%;
+  width: 40%;
   min-width: 380px;
   max-width: 580px;
 }
@@ -61,7 +61,7 @@ body {
 .item-post .post-title {
   font-weight: bold;
   font-size: 14px;
-  max-width: 280px;
+  max-width: 240px;
 }
 
 .item-year a.text-year {
@@ -83,7 +83,7 @@ body {
 
 .sidebar-toggle-parent {
     text-align: center;
-    display: none;
+    display: block;
 }
 
 .sidebar-toggle {
@@ -94,13 +94,26 @@ body {
     top: 0;
     height: 22px;
     line-height: 22px;
-    background: #222;
+    /* background: #222; */
     /* line-height: 0;
     padding: 5px; */
     z-index: 1050;
     cursor: pointer;
     font-weight: bold;
     -webkit-transform: translateZ(0);
+}
+
+.sidebar-toggle-parent a {
+    color: #000000;
+    font-size: 16px;
+}
+
+.sidebar-toggle-parent icon {
+    font-size: 18px;
+}
+
+.sidebar-toggle-parent a:hover {
+    color: #1abc9c;
 }
 
 .sidebar-toggle .hfont {
@@ -112,6 +125,40 @@ body {
 .content-home .slogan {
   font-style: italic;
   font-size: 13px;
+}
+
+.content-home-about {
+    text-align: center;
+}
+
+.content-home-about .avatar img {
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    overflow: hidden;
+}
+
+.content-home-about .name {
+    font-size: 20px;
+    font-weight: bold;
+    font-style: normal;
+    line-height: 50px;
+    height: 50px;
+    margin: 0 auto;
+    letter-spacing: -.03em;
+}
+
+.content-home .slogan {
+  font-style: italic;
+  font-size: 13px;
+}
+
+.content-home-about .slogan {
+  font-style: italic;
+  font-size: 13px;
+  display: none;
 }
 
 .item-title {
@@ -157,7 +204,7 @@ body {
 }
 
 .descdiv {
-  width: 300px;
+  width: 260px;
   margin:0 auto;
   font-size: 15px;
 }
@@ -165,7 +212,7 @@ body {
 .desctitle {
   font-weight: bold;
   font-size: 12px;
-  max-width: 300px;
+  max-width: 260px;
   position: relative;
   display: inline-block;
   transition-duration: .5s;
@@ -192,7 +239,7 @@ body {
 }
 
 code, pre, samp {
-  font-family: "Go Mono";
+  font-family: "Go-Mono";
   font-size: 13px;
 }
 
@@ -200,23 +247,23 @@ code, pre, samp {
 }
 
 .sidebar-toggle-1 {
-  top: 22px;
-  display: none;
+  left: 22px;
+  /*display: none;*/
 }
 
 .sidebar-toggle-2 {
-  top: 44px;
-  display: none;
+  left: 44px;
+  /*display: none;*/
 }
 
 .sidebar-toggle-3 {
-  top: 66px;
-  display: none;
+  left: 66px;
+  /*display: none;*/
 }
 
 .sidebar-toggle-4 {
-  top: 88px;
-  display: none;
+  left: 88px;
+  /*display: none;*/
 }
 
 .category-box {
@@ -228,11 +275,11 @@ code, pre, samp {
 }
 
 .item-category-name .category-count {
-  font-family: "Go-Regular";
+  font-family: "Futura-Medium";
 }
 
 .category-box .category-list .category-item .category-size {
-  font-family: "Go-Regular";
+  font-family: "Futura-Medium";
 }
 
 pre {
@@ -333,4 +380,13 @@ pre code {
 
 .article-content ol, .article-content ul {
   color: #000;
+}
+
+.leancloud_visitors {
+    font-size: 10px;
+    line-height:20px;
+    display:inline-block;
+    height:30px;
+    color:#999;
+    border-radius:15px;
 }

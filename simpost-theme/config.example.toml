@@ -5,33 +5,36 @@ languageCode = "en-us"
 title = "不一样的天空"
 theme = "simpost-theme"
 disqusShortname = "feilengcui008"
-paginate = 12
+paginate = 10000
 preserveTaxonomyNames = true
 
 # Theme settings
 [params]
-	name = "feilengcui008"
-	bio = "不一样的天空"
-	descriptions = [
-    "It's what you've done and you can do that defines you.",
-    "Thinker & Creator & Programmer",
-    "Linuxer/Gopher/Vimer & Container/Paxos & Distsys/ML",
-    "Tools I like → Linux & Go/C/C++/Python & Vim/VSCode & Git & Docker & Hugo/Markdown/LaTex...",
-    "Life & CS & EE & Psych & Fin",
-  ]
-  # customized css and js path like "css/personal.css"
-	customCSS = []
-	customJS  = []
-  # font family
-  defaultFont = "Go-Regular"
+name = "feilengcui008"
+bio = ""
+descriptions = [
+    "Thinking & Creating & Programming",
+    "软件工程师，熟悉后端开发，关注分布式系统。Software Engineer, Linux, Go, Distributed Systems",
+]
+leancloud_appid = "sKCGt9cqaRvCq8ij2XsSRQET-gzGzoHsz"
+leancloud_appkey = "Uusqiv2yEoQBC0vy7KnlzCqI"
+
+# Customized css and js path like "css/personal.css"
+customCSS = []
+customJS  = []
+
+# Font family
+defaultFont = "Futura-Medium"
 
 [social]
-  mail = "mailto:feilengcui008@gmail.com"
-  github = "https://github.com/feilengcui008"
-  douban = "https://www.douban.com/people/feilengcui008"
-  zhihu = "https://www.zhihu.com/people/feilengcui008"
-  twitter = "https://twitter.com/feilengcui008"
-  weibo = "http://weibo.com/feilengcui008"
+#mail = "mailto:feilengcui008@gmail.com"
+github = "https://github.com/feilengcui008"
+linkedin = "https://www.linkedin.com/in/hongfei-tan-097163a8"
+instagram = "https://www.instagram.com/tanhongfei008"
+douban = "https://www.douban.com/people/feilengcui008"
+twitter = "https://twitter.com/feilengcui008"
+zhihu = "https://www.zhihu.com/people/feilengcui008"
+#weibo = "http://weibo.com/feilengcui008"
 
 [taxonomies]
 tag = "tags"
