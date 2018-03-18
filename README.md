@@ -1,1 +1,1 @@
-some toys for fun and practice 
+Just for fun.
