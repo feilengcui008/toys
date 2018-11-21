@@ -100,7 +100,6 @@ class DoubanBackuper(object):
             next_pages = bsp.findAll("link", attrs={"rel": "next"})
             if len(next_pages) > 0:
                 url = "%s%s" % (self.book_sub_domain, next_pages[0].attrMap["href"])
-                print url
             else:
                 url = None
             # find all books in this page
@@ -308,7 +307,10 @@ class DoubanBackuper(object):
                         lst_url = None
                     doulist_items = bsp.findAll("div", attrs={"class": "doulist-item"})
                     for item in doulist_items:
-                        item_title = item.find("div", attrs={"class": "title"}).find("a")
+                        item_title = item.find("div", attrs={"class": "title"})
+                        if not item_title:
+                            continue
+                        item_title = item_title.find('a')
                         item_name = item_title.contents[0].strip()
                         item_url = item_title.attrs[0][1]
                         buf = buf + "%s | %s\n" % (item_name, item_url)
