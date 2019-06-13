@@ -344,7 +344,7 @@ class DoubanBackuper(object):
                 link = note.attrMap["data-url"]
                 rsp = self._get_with_cookie(link)
                 bp = bs.BeautifulSoup(rsp.content)
-                contents = bp.find("div", attrs={"class": "note", "id": "link-report"}).contents
+                contents = bp.find("div", attrs={"id": "link-report"}).contents
                 content = ""
                 for ele in contents:
                     content += str(ele)
