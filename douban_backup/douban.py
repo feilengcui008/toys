@@ -55,12 +55,14 @@ class DoubanBackuper(object):
         self.cookies_dict = resp.history[0].cookies.get_dict()
 
     def _get_with_cookie(self, url):
+        headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:44.0) Gecko/20100101 Firefox/44.0"}
         resp = None
         if not self.login:
             resp = requests.get(url)
         else:
             if len(self.cookie_str) > 0:
-                resp = requests.get(url, headers={"Cookie": self.cookie_str})
+                headers['Cookie'] = self.cookie_str
+                resp = requests.get(url, headers=headers)
             else:
                 resp = requests.get(url, cookies = self.cookies_dict)
         if resp is None or resp.status_code != 200:
